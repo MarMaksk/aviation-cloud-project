@@ -1,4 +1,4 @@
-package com.proj.flight.service;
+package com.proj.flight.service.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
