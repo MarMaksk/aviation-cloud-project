@@ -1,36 +1,36 @@
 package com.proj.flight.service;
 
-import com.proj.flight.dto.AirplaneDTO;
-import com.proj.flight.entity.Airplane;
-import com.proj.flight.repository.AirplaneRepository;
+import com.proj.flight.dto.FlightDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
 
 @Service
 @AllArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class AirplaneService implements CRUD<AirplaneDTO> {
+public class FlightService implements CRUD<FlightDTO> {
 
-    AirplaneRepository repository;
     ModelMapper mapper;
     KafkaTemplate<String, String> template;
 
     @Override
-    public void create(AirplaneDTO entity) {
-        repository.save(mapper.map(entity, Airplane.class));
+    public void create(FlightDTO entity) {
+        template.send("topic1", "IATA: ", entity.getIataCode());
+        ListenableFuture<SendResult<String, String>> send = template.send("topic1", "DEPARTURE: ", entity.getDeparture().toString());
     }
 
     @Override
-    public AirplaneDTO findById(Long id) {
+    public FlightDTO findById(Long id) {
         return null;
     }
 
     @Override
-    public AirplaneDTO update(AirplaneDTO dto) {
+    public FlightDTO update(FlightDTO dto) {
         return null;
     }
 

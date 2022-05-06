@@ -18,6 +18,7 @@ public class ExaminationDTOMapper implements EntityToDTOMapper<Examination, Exam
 
     private final ModelMapper mapper;
     private final AirplaneRepository repository;
+
     @Override
     public Examination toEntity(ExaminationDTO dto) {
         Examination examination = mapper.map(dto, Examination.class);
