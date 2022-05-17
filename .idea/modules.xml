@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ConfigServer/config-server-bus.iml" filepath="$PROJECT_DIR$/ConfigServer/config-server-bus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ConfigServers/config-server-bus (1).iml" filepath="$PROJECT_DIR$/ConfigServers/config-server-bus (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlightOrder/flight.iml" filepath="$PROJECT_DIR$/FlightOrder/flight.iml" />
+    </modules>
+  </component>
+</project>

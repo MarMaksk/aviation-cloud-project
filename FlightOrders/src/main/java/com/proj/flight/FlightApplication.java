@@ -3,11 +3,12 @@ package com.proj.flight;
 import com.proj.flight.dto.FlightDTO;
 import com.proj.flight.service.FlightService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.aviation.config.MapperConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
@@ -20,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 @EnableDiscoveryClient
 @AllArgsConstructor
 @EnableFeignClients(basePackages = "com.proj.flight.feign")
+@Import(MapperConfig.class)
 public class FlightApplication {
 
     KafkaTemplate<String, String> template;
