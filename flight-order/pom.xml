@@ -2,21 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>org.aviation.projects</groupId>
+        <artifactId>aviation-cloud-project</artifactId>
+        <version>1.0</version>
     </parent>
-    <groupId>com.proj</groupId>
-    <artifactId>flight</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>flight</name>
-    <description>Demo project for Spring Boot</description>
+
     <properties>
         <java.version>11</java.version>
-        <spring-cloud.version>2021.0.1</spring-cloud.version>
+        <spring-cloud.version>2021.0.2</spring-cloud.version>
     </properties>
+
+    <artifactId>flight-order</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>flight-order</name>
+    <description>Demo project for Spring Boot</description>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
         <dependency>
@@ -51,10 +53,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
