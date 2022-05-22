@@ -1,6 +1,7 @@
-package com.proj.flight.entity;
+package org.aviation.entity;
 
 import lombok.Getter;
+import org.aviation.audit.AuditEntity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,8 +10,8 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @Getter
-public class AbstractEntity {
+public class AbstractEntity extends AuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // ? Использовать IDENTITY или UUID?
+    private Long id;
 }

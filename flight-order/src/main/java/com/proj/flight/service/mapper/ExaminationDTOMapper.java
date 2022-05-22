@@ -1,15 +1,12 @@
 package com.proj.flight.service.mapper;
 
-import com.proj.flight.dto.AirplaneDTO;
 import com.proj.flight.dto.ExaminationDTO;
-import com.proj.flight.entity.AbstractEntity;
 import com.proj.flight.entity.Airplane;
 import com.proj.flight.entity.Examination;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.repository.AirplaneRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Service;
 
 @Service

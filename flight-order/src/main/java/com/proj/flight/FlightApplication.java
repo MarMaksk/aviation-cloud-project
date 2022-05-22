@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.aviation.config.MapperConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
@@ -21,7 +22,8 @@ import java.util.concurrent.ExecutionException;
 @EnableDiscoveryClient
 @AllArgsConstructor
 @EnableFeignClients(basePackages = "com.proj.flight.feign")
-@Import(MapperConfig.class)
+//@Import(MapperConfig.class)
+@ConfigurationPropertiesScan("org.aviation.*")
 public class FlightApplication {
 
     KafkaTemplate<String, String> template;

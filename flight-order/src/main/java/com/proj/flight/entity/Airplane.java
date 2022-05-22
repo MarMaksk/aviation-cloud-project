@@ -1,12 +1,10 @@
 package com.proj.flight.entity;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Data
@@ -23,4 +21,5 @@ public class Airplane extends AbstractEntity {
 
     private int loadCapacity;
 
+    private boolean deleted;
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -40,6 +41,8 @@ public class Flight extends AbstractEntity {
     private Long productOrderId;
 
     private Double ticketPrice;
+
+    private boolean deleted;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

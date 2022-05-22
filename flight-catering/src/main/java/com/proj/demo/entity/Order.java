@@ -4,6 +4,7 @@ package com.proj.demo.entity;
 import com.proj.demo.enums.DeliveryStatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

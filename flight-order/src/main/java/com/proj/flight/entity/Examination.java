@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -30,6 +31,8 @@ public class Examination extends AbstractEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
+
+    private boolean deleted;
 
     @PrePersist
     public void prePersist() {

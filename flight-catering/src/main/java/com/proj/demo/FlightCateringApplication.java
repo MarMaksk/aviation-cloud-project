@@ -4,7 +4,9 @@ import org.apache.kafka.clients.producer.Partitioner;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +15,8 @@ import java.sql.SQLException;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@RefreshScope
+@ConfigurationPropertiesScan("org.aviation.*")
 public class FlightCateringApplication {
 
     @PostConstruct

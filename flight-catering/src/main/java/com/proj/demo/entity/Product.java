@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

@@ -4,9 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Data
@@ -20,6 +20,10 @@ public class Seat extends AbstractEntity {
     Бизнес класс
      */
     private boolean business;
+
+    private boolean busy = false;
+
+    private boolean deleted;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
