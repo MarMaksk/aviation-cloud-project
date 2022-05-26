@@ -1,6 +1,7 @@
 package org.aviation.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.aviation.audit.AuditEntity;
 
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,8 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @Getter
-public class AbstractEntity extends AuditEntity {
+@Setter
+public abstract class AbstractEntity extends AuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

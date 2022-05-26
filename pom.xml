@@ -19,6 +19,7 @@
         <module>dependencies</module>
         <module>flight-catering</module>
         <module>flight-order</module>
+        <module>user-service</module>
         <module>gateway</module>
         <module>eureka-discovery-service</module>
         <module>config-service</module>

@@ -2,6 +2,7 @@ package org.aviation.audit;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.Instant;
@@ -10,7 +11,10 @@ import java.time.Instant;
 @MappedSuperclass
 @EntityListeners(AuditDateListener.class)
 public class AuditEntity {
+
+    @Column(updatable = false)
     private Instant createdAt;
 
+    @Column(updatable = false)
     private Instant updatedAt;
 }
