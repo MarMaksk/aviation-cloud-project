@@ -6,5 +6,6 @@
 
 Для запуска в консоли БД требуется предварительно сделать:
 
-CREATE DATABASE catering;
-CREATE DATABASE orders;
+CREATE DATABASE catering;<br>
+CREATE DATABASE orders;<br>
+CREATE DATABASE users;
