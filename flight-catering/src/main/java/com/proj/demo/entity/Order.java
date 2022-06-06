@@ -1,15 +1,16 @@
 package com.proj.demo.entity;
 
 
-import com.proj.demo.enums.DeliveryStatusEnum;
+import org.aviation.entity.enums.DeliveryStatus;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.aviation.entity.AbstractEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -32,5 +33,17 @@ public class Order extends AbstractEntity {
     /*
     Статус доставки
      */
-    private DeliveryStatusEnum status;
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus status;
+    /*
+    Идентификатор с другого сервиса
+     */
+    @Column(unique = true)
+    private Integer productOrderId;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany
+    @JoinColumn(name = "product_id")
+    private Set<Product> products;
 }

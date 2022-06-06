@@ -47,7 +47,7 @@ public class UserService {
     }
 
     public UserDTO updateUser(UserDTO userDTO, Principal principal) {
-        User user = getUserByPrincipal(principal);
+        User user = getUserByPrincipal(principal.getName());
         mapper.map(userDTO, user);
         System.out.println(user);
         return userDTOMapper.toDTO(
@@ -55,14 +55,13 @@ public class UserService {
         );
     }
 
-    private User getUserByPrincipal(Principal principal) {
-        String username = principal.getName();
+    private User getUserByPrincipal(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found. Name " + username));
     }
 
-    public UserDTO getCurrentUser(Principal principal) {
-        return userDTOMapper.toDTO(getUserByPrincipal(principal));
+    public UserDTO getCurrentUser(String username) {
+        return userDTOMapper.toDTO(getUserByPrincipal(username));
     }
 
     public UserDTO getUserById(Long id) {

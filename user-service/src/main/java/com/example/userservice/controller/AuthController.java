@@ -41,11 +41,7 @@ public class AuthController {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors))
             return errors;
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginRequest.getUsername(), loginRequest.getPassword()
-        ));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
+        String jwt = auth(loginRequest.getUsername(), loginRequest.getPassword());
         return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
     }
 
@@ -56,6 +52,15 @@ public class AuthController {
         if (!ObjectUtils.isEmpty(errors))
             return errors;
         userService.createUser(signupRequest);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully"));
+        String jwt = auth(signupRequest.getUsername(), signupRequest.getPassword());
+        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
+    }
+
+    private String auth(String username, String password) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                username, password
+        ));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
     }
 }

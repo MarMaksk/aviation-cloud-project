@@ -2,6 +2,7 @@ package com.proj.flight.service.mapper;
 
 import com.proj.flight.dto.AirportDTO;
 import com.proj.flight.entity.Airport;
+import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

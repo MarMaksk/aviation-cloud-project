@@ -2,13 +2,17 @@ package com.proj.flight.service;
 
 import com.proj.flight.dto.AirplaneDTO;
 import com.proj.flight.entity.Airplane;
+import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.repository.AirplaneRepository;
+import com.proj.flight.service.mapper.AirplaneDTOMapper;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.modelmapper.ModelMapper;
+import org.aviation.service.CRUD;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -16,26 +20,38 @@ import org.springframework.stereotype.Service;
 public class AirplaneService implements CRUD<AirplaneDTO> {
 
     AirplaneRepository repository;
-    ModelMapper mapper;
-    KafkaTemplate<String, String> template;
+    AirplaneDTOMapper mapper;
 
-    @Override
-    public void create(AirplaneDTO entity) {
-        repository.save(mapper.map(entity, Airplane.class));
+
+    public List<AirplaneDTO> findAll() {
+        return mapper.toDTOs(repository.findAllByDeletedFalse());
+    }
+
+    public List<AirplaneDTO> findAllNoBusy() {
+        return mapper.toDTOs(repository.findAllByDeletedFalseAndBusyFalse());
     }
 
     @Override
-    public AirplaneDTO findById(Long id) {
-        return null;
+    public void create(AirplaneDTO dto) {
+        repository.save(mapper.toEntity(dto));
     }
+
+    @Override
+    public AirplaneDTO findByCode(String code) throws Exception {
+        return mapper.toDTO(repository.findByIataCode(code).orElseThrow(NoSuchAirplaneException::new));
+    }
+
 
     @Override
     public AirplaneDTO update(AirplaneDTO dto) {
-        return null;
+        Airplane save = repository.save(mapper.toEntity(dto));
+        return mapper.toDTO(save);
     }
 
     @Override
-    public void delete(Long id) {
-
+    public void delete(Long id) throws NoSuchAirplaneException {
+        Airplane airplane = repository.findById(id).orElseThrow(NoSuchAirplaneException::new);
+        airplane.setDeleted(true);
+        repository.save(airplane);
     }
 }

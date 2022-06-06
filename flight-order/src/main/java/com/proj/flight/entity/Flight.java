@@ -1,5 +1,6 @@
 package com.proj.flight.entity;
 
+import com.proj.flight.entity.enums.FlightStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,10 @@ import lombok.ToString;
 import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Random;
 import java.util.Set;
 
 @Entity
@@ -18,14 +22,14 @@ public class Flight extends AbstractEntity {
 
     private boolean regular;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "airplane_id")
-    public Airplane airplane;
+    private Airplane airplane;
 
     /*
     Полный номер рейса содержит ИАТА и ИКАО код -> длина до 7 символов
      */
-    @Column(length = 7)
+    @Column(length = 7, unique = true)
     private String flightNumber;
     /*
     Время вылета
@@ -34,25 +38,29 @@ public class Flight extends AbstractEntity {
     /*
     Время полёта
      */
-    private double flightTime;
+    private LocalTime flightTime;
 
     private int passengersCount;
 
-    private Long productOrderId;
+    @Column(unique = true)
+    private Integer productOrderId;
 
     private Double ticketPrice;
 
     private boolean deleted;
 
+    @Enumerated(EnumType.STRING)
+    private FlightStatus status;
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "dep_airport_id")
     private Airport departureAirport;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "arrival_airport_id")
     private Airport arrivalAirport;
 
@@ -61,5 +69,10 @@ public class Flight extends AbstractEntity {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "flight_id")
     private Set<Flight> alternativeFlights;
+
+    @PrePersist
+    public void prePersist(){
+        this.setProductOrderId(new Random().nextInt());
+    }
 
 }

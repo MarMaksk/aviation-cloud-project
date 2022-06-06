@@ -1,6 +1,6 @@
 package com.proj.demo.exception;
 
-public class NoSuchOrderException extends RuntimeException {
+public class NoSuchOrderException extends Exception {
     public NoSuchOrderException() {
         super("Order not found");
     }

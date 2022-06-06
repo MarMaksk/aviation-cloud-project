@@ -1,6 +1,6 @@
 package com.proj.demo.dto;
 
-import com.proj.demo.enums.DeliveryStatusEnum;
+import org.aviation.entity.enums.DeliveryStatus;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
@@ -27,6 +27,9 @@ public class OrderDTO {
     /*
     Статус доставки
      */
-    private DeliveryStatusEnum status;
-
+    private DeliveryStatus status;
+    /*
+        Идентификатор с другого сервиса
+         */
+    private Long productOrderId;
 }

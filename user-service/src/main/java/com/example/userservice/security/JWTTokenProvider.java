@@ -50,7 +50,7 @@ public class JWTTokenProvider {
                 ExpiredJwtException |
                 UnsupportedJwtException |
                 IllegalArgumentException ex) {
-            LOG.error(ex.getMessage());
+            LOG.info(ex.getMessage());
             return false;
         }
     }

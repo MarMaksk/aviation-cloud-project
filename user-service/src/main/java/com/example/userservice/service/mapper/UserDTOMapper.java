@@ -4,11 +4,13 @@ import com.example.userservice.dto.UserDTO;
 import com.example.userservice.entity.User;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
+@Service
 public class UserDTOMapper {
 
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
 
     public User toEntity(UserDTO dto) {
         return mapper.map(dto, User.class);

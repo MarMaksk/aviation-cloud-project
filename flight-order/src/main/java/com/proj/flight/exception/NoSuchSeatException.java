@@ -1,6 +1,6 @@
 package com.proj.flight.exception;
 
-public class NoSuchSeatException extends RuntimeException {
+public class NoSuchSeatException extends Exception {
     public NoSuchSeatException() {
         super("Seat not found");
     }

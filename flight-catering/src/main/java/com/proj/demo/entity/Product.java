@@ -35,11 +35,11 @@ public class Product extends AbstractEntity {
     /*
     Аллергены, диетический стол и т.д.
      */
-    private String tag;
+    private String tags;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToMany
-    @JoinColumn(name = "order_id")
-    private Set<Order> orders;
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    @ManyToMany
+//    @JoinColumn(name = "order_id")
+//    private Set<Order> orders;
 }

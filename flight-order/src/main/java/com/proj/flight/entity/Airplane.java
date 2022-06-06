@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -16,10 +17,13 @@ public class Airplane extends AbstractEntity {
     /*
     Код самолёта
      */
-    @Column(length = 3)
+    @Column(length = 3, unique = true)
+    @Pattern(regexp = "[A-Z][0-9][0-9]")
     private String iataCode;
 
     private int loadCapacity;
+
+    private boolean busy;
 
     private boolean deleted;
 }

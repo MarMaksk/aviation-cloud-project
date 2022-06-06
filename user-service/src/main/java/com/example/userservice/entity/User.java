@@ -3,6 +3,7 @@ package com.example.userservice.entity;
 import com.example.userservice.entity.enums.ERole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.aviation.entity.AbstractEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,7 @@ public class User extends AbstractEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"))
+    @ToString.Exclude
     private Set<ERole> roles = new HashSet<>();
 
     @Transient

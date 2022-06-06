@@ -2,14 +2,16 @@ package com.proj.demo.service.mapper;
 
 import com.proj.demo.dto.OrderDTO;
 import com.proj.demo.entity.Order;
+import lombok.AllArgsConstructor;
+import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class OrderDTOMapper implements EntityToDTOMapper<Order, OrderDTO> {
-    @Autowired
-    private ModelMapper mapper;
+
+    private final ModelMapper mapper;
 
     @Override
     public Order toEntity(OrderDTO dto) {

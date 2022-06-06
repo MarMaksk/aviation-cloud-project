@@ -6,6 +6,7 @@ import com.proj.flight.entity.Examination;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.repository.AirplaneRepository;
 import lombok.AllArgsConstructor;
+import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class ExaminationDTOMapper implements EntityToDTOMapper<Examination, Exam
     private final AirplaneRepository repository;
 
     @Override
-    public Examination toEntity(ExaminationDTO dto) {
+    public Examination toEntity(ExaminationDTO dto) throws NoSuchAirplaneException {
         Examination examination = mapper.map(dto, Examination.class);
         Airplane airplane = repository.findByIataCode(dto.getIataCode()).orElseThrow(NoSuchAirplaneException::new);
         examination.setAirplane(airplane);
@@ -26,8 +27,8 @@ public class ExaminationDTOMapper implements EntityToDTOMapper<Examination, Exam
 
     @Override
     public ExaminationDTO toDTO(Examination entity) {
-        mapper.createTypeMap(Examination.class, ExaminationDTO.class)
-                .addMapping(ex -> ex.getAirplane().getIataCode(), ExaminationDTO::setIataCode);
-        return mapper.map(entity, ExaminationDTO.class);
+        ExaminationDTO dto = mapper.map(entity, ExaminationDTO.class);
+        dto.setIataCode(entity.getAirplane().getIataCode());
+        return dto;
     }
 }

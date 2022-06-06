@@ -1,9 +1,11 @@
 package com.proj.flight.dto;
 
+import com.proj.flight.entity.enums.FlightStatus;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 public class FlightDTO {
@@ -27,11 +29,13 @@ public class FlightDTO {
     /*
     Время полёта
      */
-    private double flightTime;
+    private LocalTime flightTime;
 
     private int passengersCount;
 
-    private Long productOrderId;
+    private Integer productOrderId;
+
+    private String status;
 
     private Double ticketPrice;
 

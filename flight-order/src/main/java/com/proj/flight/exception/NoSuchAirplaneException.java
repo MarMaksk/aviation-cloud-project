@@ -1,6 +1,6 @@
 package com.proj.flight.exception;
 
-public class NoSuchAirplaneException extends RuntimeException {
+public class NoSuchAirplaneException extends Exception {
     public NoSuchAirplaneException() {
         super("Airplane not found");
     }

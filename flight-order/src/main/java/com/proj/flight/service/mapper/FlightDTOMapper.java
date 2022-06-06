@@ -4,6 +4,7 @@ import com.proj.flight.dto.FlightDTO;
 import com.proj.flight.entity.Airplane;
 import com.proj.flight.entity.Airport;
 import com.proj.flight.entity.Flight;
+import com.proj.flight.entity.enums.FlightStatus;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.repository.AirplaneRepository;
@@ -11,8 +12,11 @@ import com.proj.flight.repository.AirportRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -24,7 +28,7 @@ public class FlightDTOMapper implements EntityToDTOMapper<Flight, FlightDTO> {
     AirplaneRepository airplaneRepository;
 
     @Override
-    public Flight toEntity(FlightDTO dto) {
+    public Flight toEntity(FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException {
         Flight flight = mapper.map(dto, Flight.class);
         Airplane airplane = airplaneRepository.findByIataCode(dto.getIataCode())
                 .orElseThrow(NoSuchAirplaneException::new);
@@ -40,10 +44,11 @@ public class FlightDTOMapper implements EntityToDTOMapper<Flight, FlightDTO> {
 
     @Override
     public FlightDTO toDTO(Flight entity) {
-        mapper.createTypeMap(Flight.class, FlightDTO.class)
-                .addMapping(en -> en.getAirplane().getIataCode(), FlightDTO::setIataCode)
-                .addMapping(en -> en.getDepartureAirport().getIcaoCode(), FlightDTO::setIcaoCodeDeparture)
-                .addMapping(en -> en.getArrivalAirport().getIcaoCode(), FlightDTO::setIcaoCodeArrival);
-        return mapper.map(entity, FlightDTO.class);
+        FlightDTO dto = mapper.map(entity, FlightDTO.class);
+        dto.setIataCode(entity.getAirplane().getIataCode());
+        dto.setIcaoCodeArrival(entity.getArrivalAirport().getIcaoCode());
+        dto.setIcaoCodeDeparture(entity.getDepartureAirport().getIcaoCode());
+        dto.setStatus(entity.getStatus().getName());
+        return dto;
     }
 }

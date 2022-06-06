@@ -7,6 +7,7 @@ import org.aviation.entity.AbstractEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Data
@@ -14,7 +15,8 @@ import javax.persistence.Table;
 @Table(name = "airport")
 public class Airport extends AbstractEntity {
     /* airplane */
-    @Column(length = 4)
+    @Column(length = 4, unique = true)
+    @Pattern(regexp = "^\\d+$")
     private String icaoCode;
 
     private String country;
