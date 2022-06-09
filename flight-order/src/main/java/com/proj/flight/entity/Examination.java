@@ -32,8 +32,6 @@ public class Examination extends AbstractEntity {
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
 
-    private boolean deleted;
-
     @PrePersist
     public void prePersist() {
         if (date == null)

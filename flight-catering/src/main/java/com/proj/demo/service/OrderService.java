@@ -2,6 +2,7 @@ package com.proj.demo.service;
 
 import com.proj.demo.dto.OrderDTO;
 import com.proj.demo.entity.Order;
+import lombok.RequiredArgsConstructor;
 import org.aviation.entity.enums.DeliveryStatus;
 import com.proj.demo.repository.OrderRepository;
 import com.proj.demo.service.mapper.OrderDTOMapper;
@@ -13,7 +14,7 @@ import org.aviation.service.CRUD;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class OrderService implements CRUD<OrderDTO> {
 

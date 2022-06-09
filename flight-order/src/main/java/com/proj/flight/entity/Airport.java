@@ -23,5 +23,4 @@ public class Airport extends AbstractEntity {
 
     private String city;
 
-    private boolean deleted;
 }

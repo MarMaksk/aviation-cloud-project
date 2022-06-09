@@ -2,16 +2,17 @@ package com.proj.flight.service.mapper;
 
 import com.proj.flight.dto.AirportDTO;
 import com.proj.flight.entity.Airport;
+import lombok.RequiredArgsConstructor;
 import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AirportDTOMapper implements EntityToDTOMapper<Airport, AirportDTO> {
 
-    @Autowired
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
 
     @Override
     public Airport toEntity(AirportDTO dto) {

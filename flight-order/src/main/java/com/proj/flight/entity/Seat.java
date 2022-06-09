@@ -23,8 +23,6 @@ public class Seat extends AbstractEntity {
 
     private boolean busy = false;
 
-    private boolean deleted;
-
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne

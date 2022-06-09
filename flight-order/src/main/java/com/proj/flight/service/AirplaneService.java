@@ -7,15 +7,20 @@ import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.service.mapper.AirplaneDTOMapper;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.service.CRUD;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AirplaneService implements CRUD<AirplaneDTO> {
 
@@ -23,8 +28,8 @@ public class AirplaneService implements CRUD<AirplaneDTO> {
     AirplaneDTOMapper mapper;
 
 
-    public List<AirplaneDTO> findAll() {
-        return mapper.toDTOs(repository.findAllByDeletedFalse());
+    public Page<AirplaneDTO> findAll(Pageable pageable) {
+        return repository.findAllByDeletedFalse(pageable).map(mapper::toDTO);
     }
 
     public List<AirplaneDTO> findAllNoBusy() {

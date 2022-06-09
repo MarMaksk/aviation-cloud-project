@@ -11,6 +11,7 @@ import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.repository.AirportRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
@@ -20,7 +21,7 @@ import java.util.Arrays;
 
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FlightDTOMapper implements EntityToDTOMapper<Flight, FlightDTO> {
 
     ModelMapper mapper;

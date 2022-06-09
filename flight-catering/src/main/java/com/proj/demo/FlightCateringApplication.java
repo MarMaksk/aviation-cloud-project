@@ -20,26 +20,11 @@ import java.sql.SQLException;
 @SpringBootApplication
 @EnableDiscoveryClient
 @RefreshScope
-//@ConfigurationPropertiesScan("org.aviation.config")
 @Import({MapperConfig.class})
 public class FlightCateringApplication {
-
-//    @KafkaListener(topics = "catering")
-    public void test(InfoForOrder info) throws SQLException {
-        System.out.println("OVEROVEROVEROVEROVEROVEROVEROVEROVEROVEROVEROVEROVEROVEROVEROVER");
-        System.out.println(info);
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(FlightCateringApplication.class, args);
     }
-
-//    @KafkaListener(id = "myId", topics = "catering")
-//    public void listen(String in, RecordMetadata rm, Partitioner partitioner) {
-//        System.out.println(in);
-//        System.out.println(rm.topic());
-//        System.out.println(partitioner);
-//
-//    }
 
 }

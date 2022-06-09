@@ -47,8 +47,6 @@ public class Flight extends AbstractEntity {
 
     private Double ticketPrice;
 
-    private boolean deleted;
-
     @Enumerated(EnumType.STRING)
     private FlightStatus status;
 

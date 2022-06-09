@@ -24,6 +24,4 @@ public class Airplane extends AbstractEntity {
     private int loadCapacity;
 
     private boolean busy;
-
-    private boolean deleted;
 }

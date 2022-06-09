@@ -4,16 +4,17 @@ import com.proj.flight.dto.AirplaneDTO;
 import com.proj.flight.dto.AirportDTO;
 import com.proj.flight.entity.Airplane;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AirplaneDTOMapper implements EntityToDTOMapper<Airplane, AirplaneDTO> {
 
-    @Autowired
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
 
     @Override
     public Airplane toEntity(AirplaneDTO dto) {

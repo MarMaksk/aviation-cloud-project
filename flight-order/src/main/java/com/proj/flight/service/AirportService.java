@@ -6,15 +6,15 @@ import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.repository.AirportRepository;
 import com.proj.flight.service.mapper.AirportDTOMapper;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.service.CRUD;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AirportService implements CRUD<AirportDTO> {
 
@@ -22,8 +22,8 @@ public class AirportService implements CRUD<AirportDTO> {
     AirportDTOMapper airportDTOMapper;
 
 
-    public List<AirportDTO> findAll() {
-        return airportDTOMapper.toDTOs(airportRepository.findAllByDeletedFalse());
+    public Page<AirportDTO> findAll(Pageable pageable) {
+        return airportRepository.findAllByDeletedFalse(pageable).map(airportDTOMapper::toDTO);
     }
 
     @Override

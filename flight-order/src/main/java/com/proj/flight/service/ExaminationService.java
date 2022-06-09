@@ -6,23 +6,23 @@ import com.proj.flight.exception.NoSuchExaminationException;
 import com.proj.flight.repository.ExaminationRepository;
 import com.proj.flight.service.mapper.ExaminationDTOMapper;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.service.CRUD;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ExaminationService implements CRUD<ExaminationDTO> {
 
     ExaminationRepository examinationRepository;
     ExaminationDTOMapper mapper;
 
-    public List<ExaminationDTO> findAll() {
-        return mapper.toDTOs(examinationRepository.findAllByDeletedFalse());
+    public Page<ExaminationDTO> findAll(Pageable pageable) {
+        return examinationRepository.findAllByDeletedFalse(pageable).map(mapper::toDTO);
     }
 
     @Override

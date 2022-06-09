@@ -4,12 +4,13 @@ import com.proj.demo.exception.NoSuchOrderException;
 import com.proj.demo.repository.OrderRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.entity.enums.DeliveryStatus;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class UtilService {
 

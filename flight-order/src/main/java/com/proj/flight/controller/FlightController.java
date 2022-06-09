@@ -7,6 +7,7 @@ import com.proj.flight.exception.NoSuchFlightException;
 import com.proj.flight.service.FlightService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/flight")
 @CrossOrigin(origins = "http://localhost:4200")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class FlightController {
 

@@ -4,20 +4,24 @@ import com.proj.flight.dto.AirplaneDTO;
 import com.proj.flight.dto.AirportDTO;
 import com.proj.flight.service.AirplaneService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/airplane")
 @CrossOrigin(origins = "http://localhost:4200")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AirplaneController {
 
@@ -28,9 +32,13 @@ public class AirplaneController {
         airplaneService.create(dto);
     }
 
-    @GetMapping("/getAll")
-    public List<AirplaneDTO> getAllAirplane() {
-        return airplaneService.findAll();
+    @GetMapping("/getAll/{sortBy}/{order}/{page}/{direction}")
+    public Page<AirplaneDTO> getAll(@PathVariable Integer order,
+                                          @PathVariable Integer page,
+                                          @PathVariable String sortBy,
+                                          @PathVariable String direction) {
+        Pageable request = PageRequest.of(page, order, Sort.by(Sort.Direction.fromString(direction), sortBy));
+        return airplaneService.findAll(request);
     }
 
     @GetMapping("/getAllNoBusy")

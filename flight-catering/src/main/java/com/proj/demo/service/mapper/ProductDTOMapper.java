@@ -2,16 +2,17 @@ package com.proj.demo.service.mapper;
 
 import com.proj.demo.dto.ProductDTO;
 import com.proj.demo.entity.Product;
+import lombok.RequiredArgsConstructor;
 import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ProductDTOMapper implements EntityToDTOMapper<Product, ProductDTO> {
 
-    @Autowired
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
 
     @Override
     public Product toEntity(ProductDTO dto) {

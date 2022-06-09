@@ -6,11 +6,13 @@ import com.proj.flight.entity.enums.FlightStatus;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.exception.NoSuchFlightException;
+import com.proj.flight.feign.OrderKafkaProducer;
 import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.repository.FlightRepository;
 import com.proj.flight.service.mapper.FlightDTOMapper;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.entity.InfoForOrder;
 import org.aviation.service.CRUD;
@@ -20,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class FlightService implements CRUD<FlightDTO> {
 
@@ -28,7 +30,7 @@ public class FlightService implements CRUD<FlightDTO> {
     FlightRepository repository;
     AirplaneRepository airplaneRepository;
     ModelMapper modelMapper;
-    InfoForOrderSender sender;
+    OrderKafkaProducer sender;
 
 
     public List<FlightDTO> findAll() {

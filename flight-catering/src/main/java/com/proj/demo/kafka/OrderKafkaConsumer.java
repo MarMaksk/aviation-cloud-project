@@ -1,6 +1,8 @@
-package com.proj.demo.service;
+package com.proj.demo.kafka;
 
+import com.proj.demo.service.OrderService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.aviation.entity.InfoForOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +13,8 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
-public class InfoForOrderListener {
+@RequiredArgsConstructor
+public class OrderKafkaConsumer {
 
     private static final Logger LOG = LoggerFactory.getLogger(InfoForOrder.class);
     private final OrderService orderService;

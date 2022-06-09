@@ -2,12 +2,19 @@ package com.proj.flight.controller;
 
 import com.proj.flight.dto.AirportDTO;
 import com.proj.flight.dto.FlightDTO;
+import com.proj.flight.entity.Airport;
 import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.exception.NoSuchFlightException;
 import com.proj.flight.service.AirportService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,15 +23,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/airport")
 @CrossOrigin(origins = "http://localhost:4200")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AirportController {
 
     AirportService airportService;
 
-    @GetMapping("/getAll")
-    public List<AirportDTO> getAllAirport() {
-        return airportService.findAll();
+    @GetMapping("/getAll/{sortBy}/{order}/{page}/{direction}")
+    public Page<AirportDTO> getAllAirport(@PathVariable Integer order,
+                                       @PathVariable Integer page,
+                                       @PathVariable String sortBy,
+                                       @PathVariable String direction) {
+        Pageable request = PageRequest.of(page, order, Sort.by(Sort.Direction.fromString(direction), sortBy));
+        return airportService.findAll(request);
     }
 
     @PostMapping("/create")

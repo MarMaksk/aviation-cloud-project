@@ -13,6 +13,7 @@ create table users
     lastname   varchar(255) not null,
     password   varchar(3000),
     username   varchar(255),
+    deleted    boolean,
     primary key (id)
 );
 alter table users

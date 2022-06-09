@@ -8,10 +8,9 @@ import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.repository.AirportRepository;
 import com.proj.flight.service.FlightService;
-import com.proj.flight.service.InfoForOrderSender;
+import com.proj.flight.feign.OrderKafkaProducer;
 import lombok.AllArgsConstructor;
 import org.aviation.config.MapperConfig;
-import org.aviation.entity.InfoForOrder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -37,12 +36,12 @@ public class FlightOrderApplication {
     FlightService flightService;
     AirplaneRepository airplaneRepository;
     AirportRepository airportRepository;
-    InfoForOrderSender sender;
+    OrderKafkaProducer sender;
 
 
     @PostConstruct
     @Transactional
-    public void test() throws ExecutionException, InterruptedException, NoSuchAirplaneException, NoSuchAirportException {
+    public void justMethod() throws ExecutionException, InterruptedException, NoSuchAirplaneException, NoSuchAirportException {
         FlightDTO flightDTO = new FlightDTO();
         flightDTO.setDeparture(LocalDateTime.now());
         flightDTO.setFlightTime(LocalTime.of(15,0,0,0));
@@ -90,7 +89,7 @@ public class FlightOrderApplication {
         airport3.setCountry("China");
         airport3.setIcaoCode("1113");
         Airport airport2 = new Airport();
-        airport2.setCity("Moscow");
+        airport2.setCity("Tarkov");
         airport2.setCountry("Russia");
         airport2.setIcaoCode("1112");
         Airport airport4 = new Airport();
@@ -98,9 +97,13 @@ public class FlightOrderApplication {
         airport4.setCountry("Russia");
         airport4.setIcaoCode("1114");
         Airport airport5 = new Airport();
-        airport5.setCity("Moscow");
+        airport5.setCity("Tambov");
         airport5.setCountry("Russia");
         airport5.setIcaoCode("1115");
+        Airport airport6 = new Airport();
+        airport6.setCity("Ekaterinburg");
+        airport6.setCountry("Russia");
+        airport6.setIcaoCode("1116");
         airplaneRepository.save(airplane);
         airplaneRepository.save(airplane2);
         airplaneRepository.save(airplane3);
@@ -111,6 +114,7 @@ public class FlightOrderApplication {
         airportRepository.save(airport3);
         airportRepository.save(airport4);
         airportRepository.save(airport5);
+        airportRepository.save(airport6);
         flightService.create(flightDTO);
         flightService.create(flightDTO2);
     }

@@ -6,12 +6,13 @@ import com.proj.flight.entity.Examination;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.repository.AirplaneRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ExaminationDTOMapper implements EntityToDTOMapper<Examination, ExaminationDTO> {
 
     private final ModelMapper mapper;

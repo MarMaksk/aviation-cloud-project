@@ -1,5 +1,6 @@
-package com.proj.flight.service;
+package com.proj.flight.feign;
 
+import lombok.RequiredArgsConstructor;
 import org.aviation.entity.InfoForOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +13,12 @@ import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InfoForOrderSender {
+@RequiredArgsConstructor
+public class OrderKafkaProducer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InfoForOrderSender.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OrderKafkaProducer.class);
 
-    @Autowired
-    private KafkaTemplate<String, InfoForOrder> kafkaTemplate;
+    private final KafkaTemplate<String, InfoForOrder> kafkaTemplate;
 
     @Value("catering")
     private String topic;

@@ -37,9 +37,4 @@ public class Product extends AbstractEntity {
      */
     private String tags;
 
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @ManyToMany
-//    @JoinColumn(name = "order_id")
-//    private Set<Order> orders;
 }
