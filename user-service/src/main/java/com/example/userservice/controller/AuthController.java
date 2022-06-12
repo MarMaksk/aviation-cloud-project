@@ -1,9 +1,10 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.dto.UserDTO;
+import com.example.userservice.entity.enums.ERole;
 import com.example.userservice.payload.request.LoginRequest;
 import com.example.userservice.payload.request.SignupRequest;
 import com.example.userservice.payload.response.JWTTokenSuccessResponse;
-import com.example.userservice.payload.response.MessageResponse;
 import com.example.userservice.security.JWTTokenProvider;
 import com.example.userservice.security.SecurityConstants;
 import com.example.userservice.service.UserService;
@@ -22,6 +23,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Set;
 
 @CrossOrigin
 @RestController
@@ -62,5 +65,11 @@ public class AuthController {
         ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
+    }
+
+    @GetMapping("/loadRoles")
+    public Set<ERole> loadRoles(Principal principal) {
+        UserDTO currentUser = userService.getCurrentUser(principal.getName());
+        return currentUser.getRoles();
     }
 }

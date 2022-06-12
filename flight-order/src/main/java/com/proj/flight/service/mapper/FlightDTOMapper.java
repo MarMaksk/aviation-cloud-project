@@ -10,14 +10,11 @@ import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.repository.AirportRepository;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -40,6 +37,8 @@ public class FlightDTOMapper implements EntityToDTOMapper<Flight, FlightDTO> {
         flight.setAirplane(airplane);
         flight.setDepartureAirport(departure);
         flight.setArrivalAirport(arrival);
+        if (dto.getStatus() != null)
+            flight.setStatus(FlightStatus.fromString(dto.getStatus()));
         return flight;
     }
 

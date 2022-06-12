@@ -19,7 +19,6 @@ public class JWTTokenProvider {
     static Logger LOG = LoggerFactory.getLogger(JWTTokenProvider.class);
 
     public String generateToken(Authentication authentication) {
-        Object principal = authentication.getPrincipal();
         User user = (User) authentication.getPrincipal();
 
         String userId = user.getId().toString();

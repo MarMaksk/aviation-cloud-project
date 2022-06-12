@@ -19,31 +19,6 @@ import java.util.HashSet;
 @Import(MapperConfig.class)
 public class UserServiceApplication {
 
-
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-    @PostConstruct
-    public void test() {
-        String admin = bCryptPasswordEncoder.encode("admin");
-        String users = bCryptPasswordEncoder.encode("user");
-        System.out.println(admin);
-        System.out.println(users);
-        User user = new User();
-        user.setPassword("admin");
-        user.setLastname("admin");
-        user.setFirstname("admin");
-        user.setUsername("admin");
-        HashSet<ERole> objects = new HashSet<>();
-        objects.add(ERole.ROLE_USER);
-        objects.add(ERole.ROLE_ADMIN);
-        user.setRoles(objects);
-//        userRepository.save(user);
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);
     }

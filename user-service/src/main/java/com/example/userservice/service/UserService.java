@@ -61,7 +61,8 @@ public class UserService {
     }
 
     public UserDTO getCurrentUser(String username) {
-        return userDTOMapper.toDTO(getUserByPrincipal(username));
+        User user = getUserByPrincipal(username);
+        return userDTOMapper.toDTO(user);
     }
 
     public UserDTO getUserById(Long id) {

@@ -3,7 +3,7 @@ values (1, now(), null, 'admin user', 'царь', 'бог', '$2a$10$pgQPzY2VRX7I
         'admin', false);
 
 insert into users.public.user_role
-values (1, 'ROLE_ADMIN');
+values (1, 'ROLE_SYSTEM');
 
 insert into users.public.users
 values (2, now(), null, 'user user', 'first', 'user', '$2a$10$4ffA0SwqTDZnvteQvwYOZ.y4o/VzocUnC1vzfyMvSgbld9PPav2d.',

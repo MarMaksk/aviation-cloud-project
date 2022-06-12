@@ -6,12 +6,11 @@ import com.proj.flight.entity.enums.FlightStatus;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.exception.NoSuchFlightException;
-import com.proj.flight.feign.OrderKafkaProducer;
+import com.proj.flight.kafka.OrderKafkaProducer;
 import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.repository.FlightRepository;
 import com.proj.flight.service.mapper.FlightDTOMapper;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.entity.InfoForOrder;
@@ -32,10 +31,25 @@ public class FlightService implements CRUD<FlightDTO> {
     ModelMapper modelMapper;
     OrderKafkaProducer sender;
 
+    public List<FlightDTO> findAlternativeFlights(String flightNumber) throws NoSuchFlightException {
+        Flight old = repository.findByFlightNumber(flightNumber).orElseThrow(NoSuchFlightException::new);
+        List<Flight> allAlternativeFlights = repository.findAllAlternativeFlights(old.getDepartureAirport().getIcaoCode(),
+                old.getArrivalAirport().getIcaoCode(),
+                old.getPassengersCount(),
+                old.getDeparture(),
+                old.getFlightNumber());
+        return mapper.toDTOs(allAlternativeFlights);
+    }
 
     public List<FlightDTO> findAll() {
         List<Flight> all = repository.findAllByDeletedFalse();
         return mapper.toDTOs(all);
+    }
+
+    public void updateStatus(FlightDTO dto) throws NoSuchFlightException {
+        Flight flight = repository.findByFlightNumber(dto.getFlightNumber()).orElseThrow(NoSuchFlightException::new);
+        flight.setStatus(FlightStatus.fromString(dto.getStatus()));
+        repository.save(flight);
     }
 
     @Override
@@ -45,7 +59,6 @@ public class FlightService implements CRUD<FlightDTO> {
         flight.setStatus(FlightStatus.CREATED);
         repository.save(flight);
         InfoForOrder info = new InfoForOrder(dto.getIcaoCodeDeparture(), dto.getIataCode(), dto.getDeparture(), flight.getProductOrderId());
-        System.out.println(info);
         sender.send(info);
     }
 
@@ -58,12 +71,19 @@ public class FlightService implements CRUD<FlightDTO> {
 
     @Override
     public FlightDTO update(FlightDTO dto) throws NoSuchFlightException, NoSuchAirplaneException, NoSuchAirportException {
+        // Получаем наш старый полёт
         Flight flight = repository.findByFlightNumber(dto.getFlightNumber()).orElseThrow(NoSuchFlightException::new);
+        // Собираем новый полёт по новым параметрам
         Flight entity = mapper.toEntity(dto);
+        // Освобождаем старый самолёт
         flight.getAirplane().setBusy(false);
+        // Обновляем информацию о нём
         airplaneRepository.save(flight.getAirplane());
+        // Замещаем информацию о старом полёте новой информацией
         modelMapper.map(entity, flight);
+        // Замаем новый самолёт
         flight.getAirplane().setBusy(true);
+        // Сохраняем новый полёт
         return mapper.toDTO(repository.save(flight));
     }
 

@@ -3,7 +3,6 @@ package com.proj.demo.service;
 import com.proj.demo.exception.NoSuchOrderException;
 import com.proj.demo.repository.OrderRepository;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.entity.enums.DeliveryStatus;
@@ -17,7 +16,7 @@ public class UtilService {
     OrderRepository orderRepository;
 
     public DeliveryStatus checkDeliver(Integer productOrderId) throws NoSuchOrderException {
-        return orderRepository.findByProductOrderId(productOrderId).orElseThrow(NoSuchOrderException::new).getStatus();
+        return orderRepository.findByProductOrderIdAndDeletedFalse(productOrderId).orElseThrow(NoSuchOrderException::new).getStatus();
     }
 
 }

@@ -1,10 +1,9 @@
-package com.proj.flight.feign;
+package com.proj.flight.kafka;
 
 import lombok.RequiredArgsConstructor;
 import org.aviation.entity.InfoForOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.kafka.core.KafkaTemplate;

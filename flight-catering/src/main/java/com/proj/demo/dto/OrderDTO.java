@@ -1,10 +1,10 @@
 package com.proj.demo.dto;
 
-import org.aviation.entity.enums.DeliveryStatus;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 public class OrderDTO {
@@ -27,9 +27,11 @@ public class OrderDTO {
     /*
     Статус доставки
      */
-    private DeliveryStatus status;
+    private String status;
     /*
         Идентификатор с другого сервиса
          */
-    private Long productOrderId;
+    private Integer productOrderId;
+
+    private Set<ProductDTO> products;
 }

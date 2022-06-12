@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/airport")
@@ -36,6 +37,12 @@ public class AirportController {
                                        @PathVariable String direction) {
         Pageable request = PageRequest.of(page, order, Sort.by(Sort.Direction.fromString(direction), sortBy));
         return airportService.findAll(request);
+    }
+
+    @GetMapping("/getAll")
+    public List<AirportDTO> getAll() {
+        Pageable pageable = null;
+        return airportService.findAll(pageable).stream().collect(Collectors.toList());
     }
 
     @PostMapping("/create")

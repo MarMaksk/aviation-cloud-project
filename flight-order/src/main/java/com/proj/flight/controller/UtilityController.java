@@ -29,9 +29,7 @@ public class UtilityController {
     }
 
     @GetMapping("/checkDelivery/{productOrderId}")
-    public String checkDelivery(@PathVariable Integer productOrderId) {
-        System.out.println(utilService.checkDelivery(productOrderId).getName());
-        //Если возвращать енам то всё работает отлично
-        return utilService.checkDelivery(productOrderId).getName();
+    public DeliveryStatus checkDelivery(@PathVariable Integer productOrderId) {
+        return utilService.checkDelivery(productOrderId);
     }
 }

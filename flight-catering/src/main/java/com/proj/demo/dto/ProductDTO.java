@@ -3,6 +3,7 @@ package com.proj.demo.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 public class ProductDTO {
@@ -15,15 +16,11 @@ public class ProductDTO {
     private String name;
 
     /*
-    Дата производства
-     */
-    private LocalDate manufacturedDate;
-    /*
     Срок годности
      */
     private int expirationDate;
     /*
     Аллергены, диетический стол и т.д.
      */
-    private String tag;
+    private Set<TagDTO> tag;
 }

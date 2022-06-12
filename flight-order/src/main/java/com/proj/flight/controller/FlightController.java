@@ -6,7 +6,6 @@ import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.exception.NoSuchFlightException;
 import com.proj.flight.service.FlightService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +32,11 @@ public class FlightController {
         flightService.update(dto);
     }
 
+    @PutMapping("/updateStatus")
+    public void updateStatus(@Valid @RequestBody FlightDTO dto) throws NoSuchFlightException {
+        flightService.updateStatus(dto);
+    }
+
     @GetMapping("/getAll")
     public List<FlightDTO> getAllFlights() {
         return flightService.findAll();
@@ -42,4 +46,10 @@ public class FlightController {
     public FlightDTO getFlight(@PathVariable String flightNumber) throws NoSuchFlightException {
         return flightService.findByCode(flightNumber);
     }
+
+    @GetMapping("/alternativeFlights/{flightNumber}")
+    public List<FlightDTO> findAlternativeFlight(@PathVariable String flightNumber) throws NoSuchFlightException {
+        return flightService.findAlternativeFlights(flightNumber);
+    }
+
 }

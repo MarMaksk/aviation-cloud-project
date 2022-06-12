@@ -8,7 +8,6 @@ import lombok.ToString;
 import org.aviation.entity.AbstractEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Random;
@@ -20,9 +19,10 @@ import java.util.Set;
 @Table(name = "flight")
 public class Flight extends AbstractEntity {
 
+    @Column(updatable = false)
     private boolean regular;
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
 
@@ -69,7 +69,7 @@ public class Flight extends AbstractEntity {
     private Set<Flight> alternativeFlights;
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         this.setProductOrderId(new Random().nextInt());
     }
 

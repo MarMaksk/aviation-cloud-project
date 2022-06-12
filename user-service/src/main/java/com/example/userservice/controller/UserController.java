@@ -29,7 +29,7 @@ public class UserController {
     ResponseErrorValidation responseErrorValidation;
 
     @GetMapping("/")
-    public ResponseEntity<UserDTO> getCurrentUser(Principal principal, Authentication authentication) {
+    public ResponseEntity<UserDTO> getCurrentUser(Principal principal) {
         UserDTO currentUser = userService.getCurrentUser(principal.getName());
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }

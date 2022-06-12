@@ -8,7 +8,7 @@ import com.proj.flight.exception.NoSuchAirportException;
 import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.repository.AirportRepository;
 import com.proj.flight.service.FlightService;
-import com.proj.flight.feign.OrderKafkaProducer;
+import com.proj.flight.kafka.OrderKafkaProducer;
 import lombok.AllArgsConstructor;
 import org.aviation.config.MapperConfig;
 import org.springframework.boot.SpringApplication;
@@ -40,7 +40,6 @@ public class FlightOrderApplication {
 
 
     @PostConstruct
-    @Transactional
     public void justMethod() throws ExecutionException, InterruptedException, NoSuchAirplaneException, NoSuchAirportException {
         FlightDTO flightDTO = new FlightDTO();
         flightDTO.setDeparture(LocalDateTime.now());
