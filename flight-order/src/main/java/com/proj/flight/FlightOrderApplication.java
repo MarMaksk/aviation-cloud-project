@@ -5,6 +5,7 @@ import com.proj.flight.entity.Airplane;
 import com.proj.flight.entity.Airport;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.exception.NoSuchAirportException;
+import com.proj.flight.exception.NoSuchFlightException;
 import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.repository.AirportRepository;
 import com.proj.flight.service.FlightService;
@@ -40,7 +41,7 @@ public class FlightOrderApplication {
 
 
     @PostConstruct
-    public void justMethod() throws ExecutionException, InterruptedException, NoSuchAirplaneException, NoSuchAirportException {
+    public void justMethod() throws ExecutionException, InterruptedException, NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         FlightDTO flightDTO = new FlightDTO();
         flightDTO.setDeparture(LocalDateTime.now());
         flightDTO.setFlightTime(LocalTime.of(15,0,0,0));

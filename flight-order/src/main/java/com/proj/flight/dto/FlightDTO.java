@@ -44,4 +44,6 @@ public class FlightDTO {
 
     @Size(max = 4)
     private String icaoCodeArrival;
+
+    private String flightNumberAltFlight;
 }

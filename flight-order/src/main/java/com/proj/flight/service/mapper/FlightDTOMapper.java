@@ -7,8 +7,10 @@ import com.proj.flight.entity.Flight;
 import com.proj.flight.entity.enums.FlightStatus;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.exception.NoSuchAirportException;
+import com.proj.flight.exception.NoSuchFlightException;
 import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.repository.AirportRepository;
+import com.proj.flight.repository.FlightRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,9 +26,10 @@ public class FlightDTOMapper implements EntityToDTOMapper<Flight, FlightDTO> {
     ModelMapper mapper;
     AirportRepository airportRepository;
     AirplaneRepository airplaneRepository;
+    FlightRepository flightRepository;
 
     @Override
-    public Flight toEntity(FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException {
+    public Flight toEntity(FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         Flight flight = mapper.map(dto, Flight.class);
         Airplane airplane = airplaneRepository.findByIataCode(dto.getIataCode())
                 .orElseThrow(NoSuchAirplaneException::new);
@@ -39,6 +42,9 @@ public class FlightDTOMapper implements EntityToDTOMapper<Flight, FlightDTO> {
         flight.setArrivalAirport(arrival);
         if (dto.getStatus() != null)
             flight.setStatus(FlightStatus.fromString(dto.getStatus()));
+        if (dto.getFlightNumberAltFlight() != null)
+            flight.setAlternativeFlights(flightRepository.findByFlightNumber(dto.getFlightNumberAltFlight())
+                    .orElseThrow(NoSuchFlightException::new));
         return flight;
     }
 
@@ -49,6 +55,8 @@ public class FlightDTOMapper implements EntityToDTOMapper<Flight, FlightDTO> {
         dto.setIcaoCodeArrival(entity.getArrivalAirport().getIcaoCode());
         dto.setIcaoCodeDeparture(entity.getDepartureAirport().getIcaoCode());
         dto.setStatus(entity.getStatus().getName());
+        if (entity.getAlternativeFlights() != null)
+            dto.setFlightNumberAltFlight(entity.getAlternativeFlights().getFlightNumber());
         return dto;
     }
 }

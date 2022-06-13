@@ -64,9 +64,9 @@ public class Flight extends AbstractEntity {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "flight_id")
-    private Set<Flight> alternativeFlights;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "alt_flight_id")
+    private Flight alternativeFlights;
 
     @PrePersist
     public void prePersist() {

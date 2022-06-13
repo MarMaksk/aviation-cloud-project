@@ -23,7 +23,7 @@ public class FlightController {
     FlightService flightService;
 
     @PostMapping("/create")
-    public void create(@Valid @RequestBody FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException {
+    public void create(@Valid @RequestBody FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         flightService.create(dto);
     }
 
@@ -50,6 +50,11 @@ public class FlightController {
     @GetMapping("/alternativeFlights/{flightNumber}")
     public List<FlightDTO> findAlternativeFlight(@PathVariable String flightNumber) throws NoSuchFlightException {
         return flightService.findAlternativeFlights(flightNumber);
+    }
+
+    @GetMapping("/selectAlternativeFlight/{flightNumber}/{flightNumberAlternative}")
+    public void selectAlternativeFlight(@PathVariable String flightNumber, @PathVariable String flightNumberAlternative) throws NoSuchFlightException {
+        flightService.selectAlternativeFlight(flightNumber, flightNumberAlternative);
     }
 
 }

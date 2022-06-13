@@ -17,6 +17,7 @@ import org.aviation.entity.InfoForOrder;
 import org.aviation.service.CRUD;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -30,6 +31,13 @@ public class FlightService implements CRUD<FlightDTO> {
     AirplaneRepository airplaneRepository;
     ModelMapper modelMapper;
     OrderKafkaProducer sender;
+
+    public void selectAlternativeFlight(String flightNumber, String flightNumberAlternative) throws NoSuchFlightException {
+        Flight flight = repository.findByFlightNumber(flightNumber).orElseThrow(NoSuchFlightException::new);
+        Flight altFlight = repository.findByFlightNumber(flightNumberAlternative).orElseThrow(NoSuchFlightException::new);
+        flight.setAlternativeFlights(altFlight);
+        repository.save(flight);
+    }
 
     public List<FlightDTO> findAlternativeFlights(String flightNumber) throws NoSuchFlightException {
         Flight old = repository.findByFlightNumber(flightNumber).orElseThrow(NoSuchFlightException::new);
@@ -53,7 +61,7 @@ public class FlightService implements CRUD<FlightDTO> {
     }
 
     @Override
-    public void create(FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException {
+    public void create(FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         Flight flight = mapper.toEntity(dto);
         flight.getAirplane().setBusy(true);
         flight.setStatus(FlightStatus.CREATED);
