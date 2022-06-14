@@ -5,7 +5,6 @@ import com.proj.flight.entity.Airplane;
 import com.proj.flight.entity.Seat;
 import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.repository.AirplaneRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.aviation.service.mapper.EntityToDTOMapper;
 import org.modelmapper.ModelMapper;
@@ -21,7 +20,7 @@ public class SeatDTOMapper implements EntityToDTOMapper<Seat, SeatDTO> {
     @Override
     public Seat toEntity(SeatDTO dto) throws NoSuchAirplaneException {
         Seat seat = mapper.map(dto, Seat.class);
-        Airplane airplane = repository.findByIataCode(dto.getIataCode())
+        Airplane airplane = repository.findByIataCodeAndDeletedFalse(dto.getIataCode())
                 .orElseThrow(NoSuchAirplaneException::new);
         seat.setAirplane(airplane);
         return seat;

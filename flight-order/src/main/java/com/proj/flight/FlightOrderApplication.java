@@ -52,7 +52,7 @@ public class FlightOrderApplication {
         flightDTO.setRegular(true);
         flightDTO.setTicketPrice(50.0);
         FlightDTO flightDTO2 = new FlightDTO();
-        flightDTO2.setDeparture(LocalDateTime.now().minusDays(5));
+        flightDTO2.setDeparture(LocalDateTime.now());
         flightDTO2.setFlightTime(LocalTime.of(6,0,0,0));
         flightDTO2.setIcaoCodeArrival("1111");
         flightDTO2.setIcaoCodeDeparture("1113");

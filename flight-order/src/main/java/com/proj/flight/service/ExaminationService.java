@@ -41,9 +41,10 @@ public class ExaminationService implements CRUD<ExaminationDTO> {
     }
 
     @Override
-    public void delete(Long id) throws Exception {
-        Examination examination = examinationRepository.findById(id).orElseThrow(NoSuchExaminationException::new);
-        examination.setDeleted(true);
-        examinationRepository.save(examination);
+    @Deprecated
+    public void delete(String deprecated) throws Exception {
+//        Examination examination = examinationRepository.findById(id).orElseThrow(NoSuchExaminationException::new);
+//        examination.setDeleted(true);
+//        examinationRepository.save(examination);
     }
 }

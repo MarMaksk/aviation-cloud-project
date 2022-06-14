@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AirportRepository extends JpaRepository<Airport, Long> {
-    Optional<Airport> findByIcaoCode(String icaoCode);
+    Optional<Airport> findByIcaoCodeAndDeletedFalse(String icaoCode);
 
     Page<Airport> findAllByDeletedFalse(Pageable pageable);
 }

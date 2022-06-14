@@ -1,6 +1,7 @@
 package com.proj.demo.controller;
 
 import com.proj.demo.dto.OrderDTO;
+import com.proj.demo.exception.NoSuchOrderException;
 import com.proj.demo.service.OrderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,20 @@ public class OrderController {
         return orderService.findAll(request);
     }
 
-    public void updateOrder(@RequestBody @Valid OrderDTO orderDTO) throws Exception {
+    @GetMapping("/get/{productOrderId}")
+    public OrderDTO getOrder(@PathVariable Integer productOrderId) throws NoSuchOrderException {
+        return orderService.findByproductOrderId(productOrderId);
+    }
+
+    @PutMapping("/update")
+    public void update(@RequestBody @Valid OrderDTO orderDTO) throws Exception {
+        System.out.println(orderDTO);
         orderService.update(orderDTO);
+    }
+
+    @DeleteMapping("/delete/{productOrderId}")
+    public void delete(@PathVariable String productOrderId) throws NoSuchOrderException {
+        orderService.delete(productOrderId);
     }
 
 }

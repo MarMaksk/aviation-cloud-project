@@ -1,5 +1,6 @@
 package com.proj.demo.dto;
 
+import com.proj.demo.entity.Tag;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -22,5 +23,5 @@ public class ProductDTO {
     /*
     Аллергены, диетический стол и т.д.
      */
-    private Set<TagDTO> tag;
+    private Set<TagDTO> tags;
 }

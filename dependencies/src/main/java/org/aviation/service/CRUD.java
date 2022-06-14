@@ -14,5 +14,5 @@ public interface CRUD<D> {
     D update(D dto) throws Exception;
 
     @Transactional
-    void delete(Long id) throws Exception;
+    void delete(String uniqueNumber) throws Exception;
 }

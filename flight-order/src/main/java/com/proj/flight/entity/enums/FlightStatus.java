@@ -7,7 +7,8 @@ public enum FlightStatus {
     CREATED("Создан"),
     READY("Готов к вылету"),
     FLYING("Вылетел"),
-    COMPLETED("Выполнен");
+    COMPLETED("Выполнен"),
+    CANCELLATION("Отменён");
 
     private final String name;
 

@@ -1,6 +1,5 @@
 package com.proj.demo.entity;
 
-import com.proj.demo.entity.enums.ProductStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aviation.entity.AbstractEntity;
@@ -21,6 +20,6 @@ public class OrderProductStatus extends AbstractEntity {
     @ManyToOne
     private Product product;
 
-    private ProductStatus status;
+    private boolean status;
 
 }

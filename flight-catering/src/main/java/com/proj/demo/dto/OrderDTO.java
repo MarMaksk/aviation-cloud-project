@@ -34,4 +34,6 @@ public class OrderDTO {
     private Integer productOrderId;
 
     private Set<ProductDTO> products;
+
+    private Set<ProductDTO> deliveredProducts;
 }

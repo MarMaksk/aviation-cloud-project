@@ -1,10 +1,12 @@
 package com.proj.demo;
 
+import com.proj.demo.repository.ProductRepository;
 import org.apache.kafka.clients.producer.Partitioner;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.aviation.config.MapperConfig;
 import org.aviation.entity.AbstractEntity;
 import org.aviation.entity.InfoForOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;

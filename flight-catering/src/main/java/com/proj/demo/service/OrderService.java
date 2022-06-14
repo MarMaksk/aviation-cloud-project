@@ -29,6 +29,13 @@ public class OrderService implements CRUD<OrderDTO> {
         return repository.findAllByDeletedFalse(pageable).map(orderMapper::toDTO);
     }
 
+    public OrderDTO findByproductOrderId(Integer productOrderId) throws NoSuchOrderException {
+        Order order = repository.findByProductOrderIdAndDeletedFalse(
+                productOrderId
+        ).orElseThrow(NoSuchOrderException::new);
+        return orderMapper.toDTO(order);
+    }
+
     public void createByInfo(InfoForOrder info) {
         Order order = new Order();
         order.setIataCode(info.getIataCode());
@@ -53,16 +60,19 @@ public class OrderService implements CRUD<OrderDTO> {
 
     @Override
     public OrderDTO update(OrderDTO dto) throws Exception {
-        Order order = repository.findByProductOrderIdAndDeletedFalse(dto.getProductOrderId()).orElseThrow(NoSuchOrderException::new);
+        Order order = repository.findByProductOrderIdAndDeletedFalse(dto.getProductOrderId())
+                .orElseThrow(NoSuchOrderException::new);
         Order newOrder = orderMapper.toEntity(dto);
         mapper.map(newOrder, order);
+        order.setProducts(newOrder.getProducts());
+        order.setDeliveredProducts(newOrder.getDeliveredProducts());
         Order save = repository.save(order);
         return orderMapper.toDTO(save);
     }
 
     @Override
-    public void delete(Long productOrderId) throws Exception {
-        Order order = repository.findByProductOrderIdAndDeletedFalse(productOrderId.intValue()).orElseThrow(NoSuchOrderException::new);
+    public void delete(String productOrderId) throws NoSuchOrderException {
+        Order order = repository.findByProductOrderIdAndDeletedFalse(Integer.parseInt(productOrderId)).orElseThrow(NoSuchOrderException::new);
         order.setDeleted(true);
         repository.save(order);
     }

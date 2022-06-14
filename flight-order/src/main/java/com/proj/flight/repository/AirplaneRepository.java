@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface AirplaneRepository extends JpaRepository<Airplane, Long> {
 
-    Optional<Airplane> findByIataCode(String iata);
+    Optional<Airplane> findByIataCodeAndDeletedFalse(String iata);
 
     Page<Airplane> findAllByDeletedFalse(Pageable pageable);
 

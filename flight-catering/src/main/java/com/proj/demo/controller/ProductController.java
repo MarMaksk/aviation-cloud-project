@@ -1,6 +1,5 @@
 package com.proj.demo.controller;
 
-import com.proj.demo.dto.OrderDTO;
 import com.proj.demo.dto.ProductDTO;
 import com.proj.demo.service.ProductService;
 import lombok.AccessLevel;
@@ -11,6 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -28,6 +30,17 @@ public class ProductController {
                                    @PathVariable String direction) {
         Pageable request = PageRequest.of(page, order, Sort.by(Sort.Direction.fromString(direction), sortBy));
         return productService.findAll(request);
+    }
+
+    @GetMapping("/getAll")
+    public List<ProductDTO> getAll() {
+        return productService.findAll();
+    }
+
+    @PostMapping("/create")
+    public void create(@RequestBody @Valid ProductDTO dto) throws Exception {
+        System.out.println(dto);
+        productService.create(dto);
     }
 
 }

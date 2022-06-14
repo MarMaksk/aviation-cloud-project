@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.aviation.entity.AbstractEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import java.time.LocalDate;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -19,6 +16,7 @@ public class Product extends AbstractEntity {
     /*
     Код продукта
      */
+    @Column(unique = true, updatable = false)
     private int code;
 
     private String name;
@@ -30,7 +28,7 @@ public class Product extends AbstractEntity {
     /*
     Аллергены, диетический стол и т.д.
      */
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable
     @ToString.Exclude
     private Set<Tag> tags;

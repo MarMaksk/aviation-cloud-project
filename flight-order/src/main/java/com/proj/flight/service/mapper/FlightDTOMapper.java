@@ -31,11 +31,11 @@ public class FlightDTOMapper implements EntityToDTOMapper<Flight, FlightDTO> {
     @Override
     public Flight toEntity(FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         Flight flight = mapper.map(dto, Flight.class);
-        Airplane airplane = airplaneRepository.findByIataCode(dto.getIataCode())
+        Airplane airplane = airplaneRepository.findByIataCodeAndDeletedFalse(dto.getIataCode())
                 .orElseThrow(NoSuchAirplaneException::new);
-        Airport departure = airportRepository.findByIcaoCode(dto.getIcaoCodeDeparture())
+        Airport departure = airportRepository.findByIcaoCodeAndDeletedFalse(dto.getIcaoCodeDeparture())
                 .orElseThrow(NoSuchAirportException::new);
-        Airport arrival = airportRepository.findByIcaoCode(dto.getIcaoCodeArrival())
+        Airport arrival = airportRepository.findByIcaoCodeAndDeletedFalse(dto.getIcaoCodeArrival())
                 .orElseThrow(NoSuchAirportException::new);
         flight.setAirplane(airplane);
         flight.setDepartureAirport(departure);

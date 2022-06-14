@@ -32,6 +32,11 @@ public class FlightController {
         flightService.update(dto);
     }
 
+    @DeleteMapping("/delete/{flightNumber}")
+    public void delete(@PathVariable String flightNumber) throws NoSuchFlightException {
+        flightService.delete(flightNumber);
+    }
+
     @PutMapping("/updateStatus")
     public void updateStatus(@Valid @RequestBody FlightDTO dto) throws NoSuchFlightException {
         flightService.updateStatus(dto);

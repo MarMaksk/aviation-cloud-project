@@ -6,18 +6,14 @@ import com.proj.flight.exception.NoSuchAirplaneException;
 import com.proj.flight.repository.AirplaneRepository;
 import com.proj.flight.service.mapper.AirplaneDTOMapper;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.aviation.service.CRUD;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +39,7 @@ public class AirplaneService implements CRUD<AirplaneDTO> {
 
     @Override
     public AirplaneDTO findByCode(String code) throws Exception {
-        return mapper.toDTO(repository.findByIataCode(code).orElseThrow(NoSuchAirplaneException::new));
+        return mapper.toDTO(repository.findByIataCodeAndDeletedFalse(code).orElseThrow(NoSuchAirplaneException::new));
     }
 
 
@@ -54,8 +50,8 @@ public class AirplaneService implements CRUD<AirplaneDTO> {
     }
 
     @Override
-    public void delete(Long id) throws NoSuchAirplaneException {
-        Airplane airplane = repository.findById(id).orElseThrow(NoSuchAirplaneException::new);
+    public void delete(String iataCode) throws NoSuchAirplaneException {
+        Airplane airplane = repository.findByIataCodeAndDeletedFalse(iataCode).orElseThrow(NoSuchAirplaneException::new);
         airplane.setDeleted(true);
         repository.save(airplane);
     }

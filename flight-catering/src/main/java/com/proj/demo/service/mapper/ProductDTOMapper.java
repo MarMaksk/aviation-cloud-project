@@ -26,23 +26,22 @@ public class ProductDTOMapper implements EntityToDTOMapper<Product, ProductDTO> 
     @Override
     public Product toEntity(ProductDTO dto) {
         Product entity = mapper.map(dto, Product.class);
-        entity.setTags(dto.getTag().stream()
-                .map(TagDTO::getName)
-                .map(tagRepository::findByName)
-                .map(Optional::get)
+        entity.setTags(dto.getTags().stream()
+                .map(tag -> {
+                    Optional<Tag> optionalTag = tagRepository.findByName(tag.getName());
+                    return optionalTag.orElse(new Tag(tag.getName()));
+                })
                 .collect(Collectors.toSet()));
-        System.out.println(entity);
         return entity;
     }
 
     @Override
     public ProductDTO toDTO(Product entity) {
         ProductDTO dto = mapper.map(entity, ProductDTO.class);
-        dto.setTag(entity.getTags().stream()
+        dto.setTags(entity.getTags().stream()
                 .map(Tag::getName)
                 .map(TagDTO::new)
                 .collect(Collectors.toSet()));
-        System.out.println(dto);
         return dto;
     }
 }

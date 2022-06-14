@@ -46,4 +46,10 @@ public class Order extends AbstractEntity {
     @ManyToMany
     @JoinColumn(name = "product_id")
     private Set<Product> products;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany
+    @JoinColumn(name = "product_id")
+    private Set<Product> deliveredProducts;
 }

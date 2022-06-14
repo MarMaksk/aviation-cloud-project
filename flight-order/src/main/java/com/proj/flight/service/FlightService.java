@@ -19,6 +19,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -65,6 +67,10 @@ public class FlightService implements CRUD<FlightDTO> {
         Flight flight = mapper.toEntity(dto);
         flight.getAirplane().setBusy(true);
         flight.setStatus(FlightStatus.CREATED);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//        LocalDateTime dateTime = LocalDateTime.parse(dto.getDeparture().format(formatter), formatter);
+//        System.out.println(dateTime);
+//        flight.setDeparture(dateTime);
         repository.save(flight);
         InfoForOrder info = new InfoForOrder(dto.getIcaoCodeDeparture(), dto.getIataCode(), dto.getDeparture(), flight.getProductOrderId());
         sender.send(info);
@@ -96,8 +102,8 @@ public class FlightService implements CRUD<FlightDTO> {
     }
 
     @Override
-    public void delete(Long id) throws NoSuchFlightException {
-        Flight flight = repository.findById(id).orElseThrow(NoSuchFlightException::new);
+    public void delete(String flightNumber) throws NoSuchFlightException {
+        Flight flight = repository.findByFlightNumber(flightNumber).orElseThrow(NoSuchFlightException::new);
         flight.setDeleted(true);
         repository.save(flight);
     }

@@ -30,4 +30,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "inner join catering.public.orders o on o.id = op.order_id " +
             "where o.product_order_id = :productOrderId", nativeQuery = true)
     Set<Product> findAllByProductOrderId(@Param("productOrderId") Integer productOrderId);
+
+    @Query(value = "select code from catering.public.product prod order by code desc limit 1", nativeQuery = true)
+    Integer findLastProductCode();
+
 }
