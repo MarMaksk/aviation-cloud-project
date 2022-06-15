@@ -49,7 +49,6 @@ public class UserService {
     public UserDTO updateUser(UserDTO userDTO, Principal principal) {
         User user = getUserByPrincipal(principal.getName());
         mapper.map(userDTO, user);
-        System.out.println(user);
         return userDTOMapper.toDTO(
                 userRepository.save(user)
         );

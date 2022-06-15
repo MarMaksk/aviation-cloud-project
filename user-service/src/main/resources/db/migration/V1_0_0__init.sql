@@ -8,6 +8,7 @@ create table users
     id         bigserial    not null,
     created_at timestamp,
     updated_at timestamp,
+    email      varchar(255),
     bio        text,
     firstname  varchar(255) not null,
     lastname   varchar(255) not null,

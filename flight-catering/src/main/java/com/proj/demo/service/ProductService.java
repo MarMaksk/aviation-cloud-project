@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +36,9 @@ public class ProductService implements CRUD<ProductDTO> {
 
     @Override
     public void create(ProductDTO dto) throws Exception {
-        dto.setCode(productRepository.findLastProductCode() + 1);
+        int MIN_GEN_VAL = 10000000;
+        int MAX_GEN_VAL = 99999999;
+        dto.setCode(new Random().nextInt(MAX_GEN_VAL - MIN_GEN_VAL) + MIN_GEN_VAL);
         productRepository.save(productMapper.toEntity(dto));
     }
 

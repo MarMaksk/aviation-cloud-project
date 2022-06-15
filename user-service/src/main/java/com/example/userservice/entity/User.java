@@ -25,12 +25,14 @@ public class User extends AbstractEntity implements UserDetails {
     private String username;
     @Column(nullable = false)
     private String lastname;
+    @Column(unique = true)
+    private String email;
     @Column(columnDefinition = "text")
     private String bio;
     @Column(length = 3000)
     private String password;
 
-    @ElementCollection(targetClass = ERole.class)
+    @ElementCollection(targetClass = ERole.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"))
@@ -40,8 +42,9 @@ public class User extends AbstractEntity implements UserDetails {
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
 
-    public User(Long id, String firstname, String password, Collection<? extends GrantedAuthority> authorities) {
+    public User(Long id, String email, String firstname, String password, Collection<? extends GrantedAuthority> authorities) {
         this.setId(id);
+        this.email = email;
         this.firstname = firstname;
         this.password = password;
         this.authorities = authorities;
