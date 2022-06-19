@@ -1,7 +1,6 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.dto.UserDTO;
-import com.example.userservice.entity.User;
 import com.example.userservice.service.UserService;
 import com.example.userservice.validations.ResponseErrorValidation;
 import lombok.AccessLevel;
@@ -9,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;

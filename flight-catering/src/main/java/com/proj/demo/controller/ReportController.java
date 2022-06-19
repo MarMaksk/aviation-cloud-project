@@ -1,13 +1,21 @@
 package com.proj.demo.controller;
 
+import com.proj.demo.service.MailSenderService;
 import com.proj.demo.service.ReportService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/report")
@@ -17,10 +25,12 @@ import org.springframework.web.bind.annotation.*;
 public class ReportController {
 
     ReportService reportService;
+    MailSenderService mailSenderService;
 
     @GetMapping("/caterer/{productOrderId}/{responsible}/{email}")
     public ResponseEntity<byte[]> generateCatererReport(@PathVariable Integer productOrderId, @PathVariable String responsible, @PathVariable String email) throws Exception {
         byte[] bytes = reportService.generateCatererReport(productOrderId, responsible, email);
+        sendInvoiceToDeliver(productOrderId, reportService.generateDeliverInvoice(productOrderId), email);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=report-order" + productOrderId + ".pdf");
         return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(bytes);
@@ -33,4 +43,12 @@ public class ReportController {
         httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=invoice" + productOrderId + ".pdf");
         return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(bytes);
     }
+
+    private void sendInvoiceToDeliver(Integer productOrderId, byte[] data, String email){
+        new Thread(() ->
+                mailSenderService.send(email, "Накладная на заявку " + productOrderId, data, "invoice" + productOrderId + ".pdf"))
+                .start();
+    }
+
+
 }
