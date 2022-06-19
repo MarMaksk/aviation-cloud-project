@@ -18,7 +18,7 @@ public class ReportController {
 
     ReportService reportService;
 
-    @GetMapping("/{productOrderId}/{responsible}/{email}")
+    @GetMapping("/caterer/{productOrderId}/{responsible}/{email}")
     public ResponseEntity<byte[]> generateCatererReport(@PathVariable Integer productOrderId, @PathVariable String responsible, @PathVariable String email) throws Exception {
         byte[] bytes = reportService.generateCatererReport(productOrderId, responsible, email);
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -26,7 +26,7 @@ public class ReportController {
         return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(bytes);
     }
 
-    @GetMapping("/{productOrderId}")
+    @GetMapping("/deliver/{productOrderId}")
     public ResponseEntity<byte[]> generateDeliverInvoice(@PathVariable Integer productOrderId) throws Exception {
         byte[] bytes = reportService.generateDeliverInvoice(productOrderId);
         HttpHeaders httpHeaders = new HttpHeaders();

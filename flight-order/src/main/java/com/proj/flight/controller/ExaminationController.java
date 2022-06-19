@@ -27,7 +27,7 @@ public class ExaminationController {
 
     ExaminationService examinationService;
 
-    @GetMapping("/getAll/{sortBy}/{order}/{page}/{direction}")
+    @GetMapping("/{sortBy}/{order}/{page}/{direction}")
     public Page<ExaminationDTO> getAll(@PathVariable Integer order,
                                            @PathVariable Integer page,
                                            @PathVariable String sortBy,
@@ -36,7 +36,7 @@ public class ExaminationController {
         return examinationService.findAll(request);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public void create(@RequestBody @Valid ExaminationDTO dto) throws Exception {
         examinationService.create(dto);
     }

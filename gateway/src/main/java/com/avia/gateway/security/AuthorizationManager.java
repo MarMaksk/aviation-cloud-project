@@ -1,4 +1,4 @@
-package com.avia.gateway.reactive;
+package com.avia.gateway.security;
 
 import com.avia.gateway.security.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
-public class OneMoreTIme {
+public class AuthorizationManager {
     private static final String HEADER_PREFIX = "Avia ";
     private final JwtUtil jwtUtil;
 

@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/delivery")
-@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class DeliveryController {
 
     UtilService utilService;
 
-    @GetMapping("/check/{productOrderId}")
+    @GetMapping("/{productOrderId}")
     public DeliveryStatus checkDelivery(@PathVariable Integer productOrderId) throws NoSuchOrderException {
         return utilService.checkDeliver(productOrderId);
     }

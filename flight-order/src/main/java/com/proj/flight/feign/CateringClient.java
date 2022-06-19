@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("flight-catering") // Название или адрес сервиса
 public interface CateringClient {
 
-    @GetMapping("/delivery/check/{productOrderId}") // Адрес как в контроллере. В этом приложении нет подходящего контроллера и с таким
+    @GetMapping("/delivery/{productOrderId}") // Адрес как в контроллере. В этом приложении нет подходящего контроллера и с таким
                                 // адресом работать не будет
     DeliveryStatus checkDelivery(@PathVariable Integer productOrderId);
 

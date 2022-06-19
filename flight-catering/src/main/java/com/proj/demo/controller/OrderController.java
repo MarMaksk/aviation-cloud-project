@@ -23,7 +23,7 @@ public class OrderController {
 
     OrderService orderService;
 
-    @GetMapping("/getAll/{sortBy}/{order}/{page}/{direction}")
+    @GetMapping("/{sortBy}/{order}/{page}/{direction}")
     public Page<OrderDTO> getAll(@PathVariable Integer order,
                                  @PathVariable Integer page,
                                  @PathVariable String sortBy,
@@ -32,18 +32,18 @@ public class OrderController {
         return orderService.findAll(request);
     }
 
-    @GetMapping("/get/{productOrderId}")
+    @GetMapping("/{productOrderId}")
     public OrderDTO getOrder(@PathVariable Integer productOrderId) throws NoSuchOrderException {
         return orderService.findByproductOrderId(productOrderId);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public void update(@RequestBody @Valid OrderDTO orderDTO) throws Exception {
         System.out.println(orderDTO);
         orderService.update(orderDTO);
     }
 
-    @DeleteMapping("/delete/{productOrderId}")
+    @DeleteMapping("/{productOrderId}")
     public void delete(@PathVariable String productOrderId) throws NoSuchOrderException {
         orderService.delete(productOrderId);
     }

@@ -21,7 +21,7 @@ public class TagController {
 
     TagService tagService;
 
-    @GetMapping("/getAll")
+    @GetMapping
     private Set<TagDTO> getAll() {
         return tagService.getAll();
     }

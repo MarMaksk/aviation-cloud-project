@@ -27,12 +27,12 @@ public class AirplaneController {
 
     AirplaneService airplaneService;
 
-    @PostMapping("/create")
+    @PostMapping
     public void create(@RequestBody @Valid AirplaneDTO dto) {
         airplaneService.create(dto);
     }
 
-    @GetMapping("/getAll/{sortBy}/{order}/{page}/{direction}")
+    @GetMapping("/{sortBy}/{order}/{page}/{direction}")
     public Page<AirplaneDTO> getAll(@PathVariable Integer order,
                                           @PathVariable Integer page,
                                           @PathVariable String sortBy,
@@ -41,12 +41,12 @@ public class AirplaneController {
         return airplaneService.findAll(request);
     }
 
-    @GetMapping("/getAllNoBusy")
+    @GetMapping
     public Set<AirplaneDTO> getAllAirplaneNoBusy() {
         return new HashSet<>(airplaneService.findAllNoBusy());
     }
 
-    @GetMapping("/get/{iataCode}")
+    @GetMapping("/{iataCode}")
     public AirplaneDTO getAirplane(@PathVariable String iataCode) throws Exception {
         return airplaneService.findByCode(iataCode);
     }

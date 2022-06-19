@@ -23,7 +23,7 @@ public class ProductController {
 
     ProductService productService;
 
-    @GetMapping("/getAll/{sortBy}/{order}/{page}/{direction}")
+    @GetMapping("/{sortBy}/{order}/{page}/{direction}")
     public Page<ProductDTO> getAll(@PathVariable Integer order,
                                    @PathVariable Integer page,
                                    @PathVariable String sortBy,
@@ -32,14 +32,13 @@ public class ProductController {
         return productService.findAll(request);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public List<ProductDTO> getAll() {
         return productService.findAll();
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public void create(@RequestBody @Valid ProductDTO dto) throws Exception {
-        System.out.println(dto);
         productService.create(dto);
     }
 

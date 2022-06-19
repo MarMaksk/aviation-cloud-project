@@ -30,7 +30,7 @@ public class AirportController {
 
     AirportService airportService;
 
-    @GetMapping("/getAll/{sortBy}/{order}/{page}/{direction}")
+    @GetMapping("/{sortBy}/{order}/{page}/{direction}")
     public Page<AirportDTO> getAllAirport(@PathVariable Integer order,
                                        @PathVariable Integer page,
                                        @PathVariable String sortBy,
@@ -39,19 +39,19 @@ public class AirportController {
         return airportService.findAll(request);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public List<AirportDTO> getAll() {
         Pageable pageable = null;
         return airportService.findAll(pageable).stream().collect(Collectors.toList());
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public void create(@RequestBody @Valid AirportDTO dto) {
         airportService.create(dto);
     }
 
-    @GetMapping("/get/{icaoCode}")
-    public AirportDTO getAirplane(@PathVariable String icaoCode) throws NoSuchAirportException {
+    @GetMapping("/{icaoCode}")
+    public AirportDTO getAirport(@PathVariable String icaoCode) throws NoSuchAirportException {
         return airportService.findByCode(icaoCode);
     }
 

@@ -21,14 +21,8 @@ import java.util.stream.Collectors;
 public class UtilityController {
 
     UtilService utilService;
-    public static final FlightStatus[] VALUES = FlightStatus.values();
 
-    @GetMapping("/getAllFlightStatus")
-    public List<String> getAllFlightStatus() {
-        return Arrays.stream(VALUES).map(FlightStatus::getName).collect(Collectors.toList());
-    }
-
-    @GetMapping("/checkDelivery/{productOrderId}")
+    @GetMapping("/{productOrderId}")
     public DeliveryStatus checkDelivery(@PathVariable Integer productOrderId) {
         return utilService.checkDelivery(productOrderId);
     }
