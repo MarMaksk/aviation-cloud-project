@@ -56,12 +56,6 @@ public class FlightService implements CRUD<FlightDTO> {
         return mapper.toDTOs(all);
     }
 
-    public void updateStatus(FlightDTO dto) throws NoSuchFlightException {
-        Flight flight = repository.findByFlightNumber(dto.getFlightNumber()).orElseThrow(NoSuchFlightException::new);
-        flight.setStatus(FlightStatus.fromString(dto.getStatus()));
-        repository.save(flight);
-    }
-
     @Override
     public void create(FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         Flight flight = mapper.toEntity(dto);

@@ -12,7 +12,7 @@ public class RouterValidator {
     public static final List<String> openApiEndpoints = List.of(
             "/avia/auth/register",
             "/avia/auth/login"
-//            "avia/order/**" //Пытался открыть этот путь для всех, но всё равно в postman получаю 401 не авторизован. А в браузере страницу для авторизации
+//            "avia/order/**"
     );
 
     public Predicate<ServerHttpRequest> isSecured =

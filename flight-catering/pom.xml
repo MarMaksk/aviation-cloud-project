@@ -14,12 +14,25 @@
     <name>FlightCatering</name>
     <description>Demo project for Spring Boot</description>
 
-<!--    <properties>-->
-<!--        <java.version>11</java.version>-->
-<!--        <spring-cloud.version>2021.0.2</spring-cloud.version>-->
-<!--    </properties>-->
+    <properties>
+        <java.version>11</java.version>
+        <spring-cloud.version>2021.0.2</spring-cloud.version>
+    </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.19.1</version>
+        </dependency>
+        <dependency>
+            <groupId>local.jasperFont</groupId>
+            <artifactId>local.jasperFont</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/reports/defavu-serif.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

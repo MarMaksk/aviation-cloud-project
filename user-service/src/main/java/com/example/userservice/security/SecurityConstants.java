@@ -8,10 +8,10 @@ public class SecurityConstants {
 
     static String SIGN_UP_URLS = "/avia/auth/**";
 
-    static String SECRET = "AVIATION%PROJECT%PROJECT%AVIATION";
+    static String SECRET = "%AVIATION%PROJECT%AVIATION%PROJECT%";
     public final static String TOKEN_PREFIX = "Avia ";
     static String HEADER_STRING = "Authorization";
     static String CONTENT_TYPE = "application/json";
-    static long EXPIRATION_TIME = 3600_000; // Через 1 час токен будет недействителен. А надо ли?
+    static long EXPIRATION_TIME = 97200_000;
 
 }

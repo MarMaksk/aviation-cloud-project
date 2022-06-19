@@ -12,7 +12,6 @@
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.2</spring-cloud.version>
-        <modelmapper.version>3.0.0</modelmapper.version>
     </properties>
 
     <artifactId>flight-order</artifactId>

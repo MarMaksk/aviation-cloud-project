@@ -2,26 +2,30 @@ package com.avia.gateway.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
+import java.security.KeyPair;
 import java.util.Date;
 
 @Component
-// Возможно нужно как-то (через feign) проверить что такой токен существует. Или не нужно
-// Покрайней мере я про такое на нашёл. Видел только на spring.io для Zuul и O2Auth что там упомянулось о проверке токена
-// Но там это было просто упомянуто (статья была не об этом)
-// Либо не нужно т.к. у нас есть secret, который все используют
 public class JwtUtil {
 
-    // Такой же как и в константах User сервиса
-    @Value("AVIATION%PROJECT%PROJECT%AVIATION")
+    @Value("%AVIATION%PROJECT%AVIATION%PROJECT%")
     private String secret;
 
     private Key key;
+
+    @Value("Avia ")
+    private String TOKEN_PREFIX;
+    private String HEADER_STRING = "Authorization";
 
     @PostConstruct
     public void init(){
@@ -29,7 +33,11 @@ public class JwtUtil {
     }
 
     public Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private boolean isTokenExpired(String token) {
@@ -40,4 +48,16 @@ public class JwtUtil {
         return this.isTokenExpired(token);
     }
 
+    public boolean hasRole(ServerHttpRequest request,String role) {
+        String token = getAuthHeader(request);
+        Claims claimsFromToken = getAllClaimsFromToken(token);
+        if (isInvalid(token))
+            return false;
+        String roles = claimsFromToken.get("roles").toString();
+        return roles.contains(role);
+    }
+
+    private String getAuthHeader(ServerHttpRequest request) {
+        return request.getHeaders().getOrEmpty("Authorization").get(0).replace(TOKEN_PREFIX, "");
+    }
 }

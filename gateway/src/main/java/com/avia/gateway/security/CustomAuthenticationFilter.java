@@ -1,35 +1,39 @@
 package com.avia.gateway.security;
 
 import io.jsonwebtoken.Claims;
-import lombok.RequiredArgsConstructor;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.cloud.gateway.filter.GatewayFilter;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-//@RefreshScope
-//@Component
-@RequiredArgsConstructor
-//@Order(1)
-public class AuthenticationFilter implements GatewayFilter
-{
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
-
-    private final RouterValidator routerValidator;//custom route validator
-
-    private final JwtUtil jwtUtil;
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class CustomAuthenticationFilter implements WebFilter {
+    @Autowired
+    private RouterValidator routerValidator;//custom route validator
+    @Autowired
+    private JwtUtil jwtUtil;
     @Value("Avia ")
     private String TOKEN_PREFIX;
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
         if (routerValidator.isSecured.test(request)) {
@@ -41,10 +45,17 @@ public class AuthenticationFilter implements GatewayFilter
             if (jwtUtil.isInvalid(token))
                 return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
 
-            this.populateRequestWithHeaders(exchange, token);
+            Claims allClaimsFromToken = jwtUtil.getAllClaimsFromToken(token);
+            ArrayList<String> roles = allClaimsFromToken.get("roles", ArrayList.class);
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(allClaimsFromToken.get("username"), null, roles
+                            .stream().map(SimpleGrantedAuthority::new)
+                            .collect(Collectors.toList()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         return chain.filter(exchange);
     }
+
 
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
@@ -60,11 +71,4 @@ public class AuthenticationFilter implements GatewayFilter
         return !request.getHeaders().containsKey("Authorization");
     }
 
-    private void populateRequestWithHeaders(ServerWebExchange exchange, String token) {
-        Claims claims = jwtUtil.getAllClaimsFromToken(token);
-        exchange.getRequest().mutate()
-                .header("id", String.valueOf(claims.get("id")))
-                .header("roles", String.valueOf(claims.get("roles")))
-                .build();
-    }
 }

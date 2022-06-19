@@ -12,6 +12,6 @@ public class JWTTokenSuccessResponse {
 
     private boolean success;
     private String token;
-//    private Set<ERole> roles;
+    private Set<ERole> roles;
 
 }

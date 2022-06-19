@@ -22,32 +22,27 @@ public class FlightController {
 
     FlightService flightService;
 
-    @PostMapping("/create")
+    @PostMapping
     public void create(@Valid @RequestBody FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         flightService.create(dto);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public void update(@Valid @RequestBody FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         flightService.update(dto);
     }
 
-    @DeleteMapping("/delete/{flightNumber}")
+    @DeleteMapping("/{flightNumber}")
     public void delete(@PathVariable String flightNumber) throws NoSuchFlightException {
         flightService.delete(flightNumber);
     }
 
-    @PutMapping("/updateStatus")
-    public void updateStatus(@Valid @RequestBody FlightDTO dto) throws NoSuchFlightException {
-        flightService.updateStatus(dto);
-    }
-
-    @GetMapping("/getAll")
+    @GetMapping
     public List<FlightDTO> getAllFlights() {
         return flightService.findAll();
     }
 
-    @GetMapping("/get/{flightNumber}")
+    @GetMapping("/{flightNumber}")
     public FlightDTO getFlight(@PathVariable String flightNumber) throws NoSuchFlightException {
         return flightService.findByCode(flightNumber);
     }
@@ -57,7 +52,7 @@ public class FlightController {
         return flightService.findAlternativeFlights(flightNumber);
     }
 
-    @GetMapping("/selectAlternativeFlight/{flightNumber}/{flightNumberAlternative}")
+    @GetMapping("/alternativeFlight/{flightNumber}/{flightNumberAlternative}")
     public void selectAlternativeFlight(@PathVariable String flightNumber, @PathVariable String flightNumberAlternative) throws NoSuchFlightException {
         flightService.selectAlternativeFlight(flightNumber, flightNumberAlternative);
     }

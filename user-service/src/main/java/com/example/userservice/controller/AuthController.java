@@ -40,23 +40,23 @@ public class AuthController {
     JWTTokenProvider jwtTokenProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+    public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors))
             return errors;
         String jwt = auth(loginRequest.getUsername(), loginRequest.getPassword());
-        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
+        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt, loadRoles(loginRequest.getUsername())));
     }
 
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult) {
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors))
             return errors;
         userService.createUser(signupRequest);
         String jwt = auth(signupRequest.getUsername(), signupRequest.getPassword());
-        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
+        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt, loadRoles(signupRequest.getUsername())));
     }
 
     private String auth(String username, String password) {
@@ -67,9 +67,8 @@ public class AuthController {
         return SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
     }
 
-    @GetMapping("/loadRoles")
-    public Set<ERole> loadRoles(Principal principal) {
-        UserDTO currentUser = userService.getCurrentUser(principal.getName());
+    private Set<ERole> loadRoles(String username) {
+        UserDTO currentUser = userService.getCurrentUser(username);
         return currentUser.getRoles();
     }
 }
