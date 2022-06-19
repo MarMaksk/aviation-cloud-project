@@ -5,17 +5,10 @@ import com.proj.demo.service.ReportService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/report")

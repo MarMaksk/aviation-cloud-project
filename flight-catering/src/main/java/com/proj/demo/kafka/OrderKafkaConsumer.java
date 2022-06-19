@@ -1,7 +1,6 @@
 package com.proj.demo.kafka;
 
 import com.proj.demo.service.OrderService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.aviation.entity.InfoForOrder;
 import org.slf4j.Logger;

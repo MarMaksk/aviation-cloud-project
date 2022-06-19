@@ -1,22 +1,17 @@
 package com.proj.flight.controller;
 
-import com.proj.flight.dto.AirplaneDTO;
 import com.proj.flight.dto.ExaminationDTO;
-import com.proj.flight.entity.Examination;
 import com.proj.flight.service.ExaminationService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/examination")

@@ -1,8 +1,6 @@
 package com.proj.flight.service;
 
 import com.proj.flight.dto.ExaminationDTO;
-import com.proj.flight.entity.Examination;
-import com.proj.flight.exception.NoSuchExaminationException;
 import com.proj.flight.repository.ExaminationRepository;
 import com.proj.flight.service.mapper.ExaminationDTOMapper;
 import lombok.AccessLevel;

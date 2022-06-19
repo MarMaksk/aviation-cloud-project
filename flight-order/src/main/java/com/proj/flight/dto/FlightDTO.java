@@ -1,6 +1,5 @@
 package com.proj.flight.dto;
 
-import com.proj.flight.entity.enums.FlightStatus;
 import lombok.Data;
 
 import javax.validation.constraints.Size;

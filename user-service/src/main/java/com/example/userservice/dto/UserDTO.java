@@ -4,7 +4,6 @@ import com.example.userservice.entity.enums.ERole;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data

@@ -1,12 +1,12 @@
 package com.proj.demo.entity;
 
 
-import org.aviation.entity.enums.DeliveryStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.aviation.entity.AbstractEntity;
+import org.aviation.entity.enums.DeliveryStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

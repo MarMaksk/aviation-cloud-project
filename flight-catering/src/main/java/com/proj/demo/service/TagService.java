@@ -1,7 +1,6 @@
 package com.proj.demo.service;
 
 import com.proj.demo.dto.TagDTO;
-import com.proj.demo.entity.Product;
 import com.proj.demo.entity.Tag;
 import com.proj.demo.repository.TagRepository;
 import lombok.AccessLevel;

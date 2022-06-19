@@ -1,7 +1,6 @@
 package com.proj.flight.controller;
 
 import com.proj.flight.dto.AirplaneDTO;
-import com.proj.flight.dto.AirportDTO;
 import com.proj.flight.service.AirplaneService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @RestController

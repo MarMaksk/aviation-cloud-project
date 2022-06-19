@@ -3,7 +3,6 @@ package com.proj.flight.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Size;
 
 @Data

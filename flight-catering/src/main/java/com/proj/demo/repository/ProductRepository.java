@@ -1,6 +1,5 @@
 package com.proj.demo.repository;
 
-import com.proj.demo.entity.Order;
 import com.proj.demo.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

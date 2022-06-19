@@ -1,8 +1,8 @@
 package com.avia.gateway.security;
 
-import com.avia.gateway.security.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -17,7 +17,8 @@ import java.util.ArrayList;
 @Component
 @RequiredArgsConstructor
 public class AuthorizationManager {
-    private static final String HEADER_PREFIX = "Avia ";
+    @Value("${token.prefix}")
+    private String HEADER_PREFIX;
     private final JwtUtil jwtUtil;
 
     public ReactiveAuthorizationManager<AuthorizationContext> check(String... roles) {
