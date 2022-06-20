@@ -1,6 +1,6 @@
 package com.proj.demo.controller;
 
-import com.proj.demo.service.MailSenderService;
+import com.proj.demo.service.ISender;
 import com.proj.demo.service.ReportService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReportController {
 
     ReportService reportService;
-    MailSenderService mailSenderService;
+    ISender senderService;
 
     @GetMapping("/caterer/{productOrderId}/{responsible}/{email}")
     public ResponseEntity<byte[]> generateCatererReport(@PathVariable Integer productOrderId, @PathVariable String responsible, @PathVariable String email) throws Exception {
@@ -39,7 +39,7 @@ public class ReportController {
 
     private void sendInvoiceToDeliver(Integer productOrderId, byte[] data, String email){
         new Thread(() ->
-                mailSenderService.send(email, "Накладная на заявку " + productOrderId, data, "invoice" + productOrderId + ".pdf"))
+                senderService.send(email, "Накладная на заявку " + productOrderId, data, "invoice" + productOrderId + ".pdf"))
                 .start();
     }
 

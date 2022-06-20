@@ -1,0 +1,84 @@
+version: '3.1'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    restart: always
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    restart: always
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "test_topic:1:3"
+  db:
+    image: 'postgres:14.2-alpine'
+    container_name: flight
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_PASSWORD=compose-postgres
+      - POSTGRES_DB=flight
+    restart: always
+  config-service:
+    image: 'config-service:latest'
+    container_name: config-server
+    build:
+      context: config-service
+    ports:
+      - 8888:8888
+    depends_on:
+      - kafka
+  eureka-service:
+    image: 'eureka-discovery-service:latest'
+    container_name: eureka-service
+    build:
+      context: eureka-discovery-service
+    ports:
+      - 8761:8761
+    depends_on:
+      - config-service
+  gateway:
+    image: 'gateway:latest'
+    container_name: gateway
+    build:
+      context: gateway
+    ports:
+      - 8080:8080
+    depends_on:
+      - eureka-service
+  user-service:
+    image: 'user-service:latest'
+    container_name: user-service
+    build:
+      context: user-service
+    ports:
+      - 9002:9002
+    depends_on:
+      - gateway
+  flight-catering:
+    image: 'flight-catering:latest'
+    container_name: flight-catering
+    build:
+      context: flight-catering
+    ports:
+      - 9000:9000
+    depends_on:
+      - gateway
+  flight-order:
+    image: 'flight-order:latest'
+    container_name: flight-order
+    build:
+      context: flight-order
+    ports:
+      - 9001:9001
+    depends_on:
+      - gateway
+
+

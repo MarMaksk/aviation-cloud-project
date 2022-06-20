@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 
 @Service
 @RequiredArgsConstructor
-public class MailSenderService {
+public class MailSenderService implements ISender {
     static Logger LOG = LoggerFactory.getLogger(MailSenderService.class);
 
     private final JavaMailSender mailSender;
@@ -24,6 +24,7 @@ public class MailSenderService {
     @Value("${spring.mail.username}")
     private String username;
 
+    @Override
     public void send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
@@ -33,6 +34,7 @@ public class MailSenderService {
         mailSender.send(mailMessage);
     }
 
+    @Override
     public void send(String emailTo, String subject, byte[] data, String name) {
         MimeMessage mail = mailSender.createMimeMessage();
         try {

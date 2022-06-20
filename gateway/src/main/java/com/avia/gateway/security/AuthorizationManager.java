@@ -3,6 +3,7 @@ package com.avia.gateway.security;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -15,6 +16,7 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 
 @Component
+@RefreshScope
 @RequiredArgsConstructor
 public class AuthorizationManager {
     @Value("${token.prefix}")

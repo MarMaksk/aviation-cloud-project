@@ -17,6 +17,8 @@ public class UserDTO {
     @NotEmpty
     private String lastname;
 
+    private String email;
+
     private String bio;
 
     private Set<ERole> roles;

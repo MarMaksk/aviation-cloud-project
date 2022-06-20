@@ -28,11 +28,12 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>org.aviation.projects</groupId>
             <artifactId>dependencies</artifactId>
             <version>1.0</version>
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${project.basedir}/dependencies-1.0.jar</systemPath>-->
         </dependency>
 
         <dependency>
@@ -88,7 +89,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
 
 </project>
