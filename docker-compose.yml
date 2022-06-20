@@ -1,3 +1,4 @@
+# настроить переменные среды для eureka, kafka, db
 version: '3.1'
 services:
   zookeeper:
@@ -30,16 +31,21 @@ services:
     image: 'config-service:latest'
     container_name: config-server
     build:
-      context: config-service
+      context: ./config-service
+      dockerfile: Dockerfile
     ports:
       - 8888:8888
     depends_on:
       - kafka
+    environment:
+      - spring.cloud.stream.kafka.binder.zkNodes=kafka:2181
+      - spring.cloud.stream.kafka.binder.brokers=kafka:9092
   eureka-service:
     image: 'eureka-discovery-service:latest'
     container_name: eureka-service
     build:
-      context: eureka-discovery-service
+      context: ./eureka-discovery-service
+      dockerfile: Dockerfile
     ports:
       - 8761:8761
     depends_on:
@@ -48,7 +54,10 @@ services:
     image: 'gateway:latest'
     container_name: gateway
     build:
-      context: gateway
+      context: ./gateway
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-service:8761/eureka/
     ports:
       - 8080:8080
     depends_on:
@@ -57,7 +66,8 @@ services:
     image: 'user-service:latest'
     container_name: user-service
     build:
-      context: user-service
+      context: ./user-service
+      dockerfile: Dockerfile
     ports:
       - 9002:9002
     depends_on:
@@ -66,7 +76,8 @@ services:
     image: 'flight-catering:latest'
     container_name: flight-catering
     build:
-      context: flight-catering
+      context: ./flight-catering
+      dockerfile: Dockerfile
     ports:
       - 9000:9000
     depends_on:
@@ -75,10 +86,10 @@ services:
     image: 'flight-order:latest'
     container_name: flight-order
     build:
-      context: flight-order
+      context: ./flight-order
+      dockerfile: Dockerfile
     ports:
       - 9001:9001
     depends_on:
       - gateway
-
 
