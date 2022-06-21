@@ -58,6 +58,10 @@ services:
       dockerfile: Dockerfile
     environment:
       - eureka.client.service-url.defaultZone=http://eureka-service:8761/eureka/
+      - spring.cloud.stream.kafka.binder.zkNodes=kafka:2181
+      - spring.cloud.stream.kafka.binder.brokers=kafka:9092
+      - spring.cloud.config.uri=http://config-service:8888
+      - spring.profiles.active=dev
     ports:
       - 8080:8080
     depends_on:
@@ -82,6 +86,12 @@ services:
       - 9000:9000
     depends_on:
       - gateway
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-service:8761/eureka/
+      - spring.cloud.stream.kafka.binder.zkNodes=kafka:2181
+      - spring.cloud.stream.kafka.binder.brokers=kafka:9092
+      - spring.cloud.config.uri=http://config-service:8888
+      - spring.profiles.active=dev
   flight-order:
     image: 'flight-order:latest'
     container_name: flight-order
@@ -92,4 +102,10 @@ services:
       - 9001:9001
     depends_on:
       - gateway
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-service:8761/eureka/
+      - spring.cloud.stream.kafka.binder.zkNodes=kafka:2181
+      - spring.cloud.stream.kafka.binder.brokers=kafka:9092
+      - spring.cloud.config.uri=http://config-service:8888
+      - spring.profiles.active=dev
 

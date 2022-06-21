@@ -17,6 +17,7 @@ public class ReactiveSecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http, AuthorizationManager auth) {
+        http.cors();
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)

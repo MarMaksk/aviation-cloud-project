@@ -16,7 +16,7 @@
 
     <artifactId>user-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>flight-order</name>
+    <name>user-service</name>
     <description>User service for aviation project</description>
 
 
