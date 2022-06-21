@@ -20,7 +20,6 @@
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -30,10 +29,8 @@
 
         <dependency>
             <groupId>org.aviation.projects</groupId>
-            <artifactId>dependencies</artifactId>
+            <artifactId>commons</artifactId>
             <version>1.0</version>
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${project.basedir}/dependencies-1.0.jar</systemPath>-->
         </dependency>
 
         <dependency>

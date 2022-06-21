@@ -19,7 +19,7 @@
         <spring-cloud.version>2021.0.2</spring-cloud.version>
     </properties>
     <modules>
-        <module>dependencies</module>
+        <module>commons</module>
         <module>flight-catering</module>
         <module>flight-order</module>
         <module>user-service</module>

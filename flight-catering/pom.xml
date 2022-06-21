@@ -59,7 +59,7 @@
 
         <dependency>
             <groupId>org.aviation.projects</groupId>
-            <artifactId>dependencies</artifactId>
+            <artifactId>commons</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
