@@ -4,6 +4,7 @@ create table airplane
     created_at    timestamp,
     updated_at    timestamp,
     deleted       boolean   not null,
+    busy          boolean   not null,
     iata_code     varchar(3),
     load_capacity int4      not null,
     model         varchar(255),
@@ -14,9 +15,9 @@ create table airport
     id         bigserial not null,
     created_at timestamp,
     updated_at timestamp,
+    deleted    boolean   not null,
     city       varchar(255),
     country    varchar(255),
-    deleted    boolean   not null,
     icao_code  varchar(4),
     primary key (id)
 );
@@ -25,8 +26,8 @@ create table examination
     id          bigserial not null,
     created_at  timestamp,
     updated_at  timestamp,
-    date        date,
     deleted     boolean   not null,
+    date        date,
     description varchar(255),
     airplane_id int8,
     primary key (id)
@@ -39,15 +40,16 @@ create table flight
     deleted            boolean   not null,
     departure          timestamp,
     flight_number      varchar(7),
-    flight_time        float8    not null,
+    flight_time        time,
     passengers_count   int4      not null,
-    product_order_id   int8,
-    regular            boolean   not null,
+    product_order_id   int4,
+    regular            boolean,
+    status             varchar(255),
     ticket_price       float8,
     airplane_id        int8,
+    alt_flight_id      int8,
     arrival_airport_id int8,
     dep_airport_id     int8,
-    flight_id          int8,
     primary key (id)
 );
 create table seat
@@ -55,22 +57,30 @@ create table seat
     id          bigserial not null,
     created_at  timestamp,
     updated_at  timestamp,
+    deleted     boolean   not null,
     business    boolean   not null,
     busy        boolean   not null,
-    deleted     boolean   not null,
     seat_number varchar(3),
     airplane_id int8,
     primary key (id)
 );
+alter table airplane
+    add constraint airplane_AK unique (iata_code);
+alter table airport
+    add constraint airport_AK unique (icao_code);
+alter table flight
+    add constraint flight_number_AK unique (flight_number);
+alter table flight
+    add constraint flight_AK unique (product_order_id);
 alter table examination
-    add constraint fk_examination_airplane foreign key (airplane_id) references airplane;
+    add constraint examination_airplane_FK foreign key (airplane_id) references airplane;
 alter table flight
-    add constraint fk_flight_airplane foreign key (airplane_id) references airplane;
+    add constraint flight_airplane_FK foreign key (airplane_id) references airplane;
 alter table flight
-    add constraint fk_flight_arr_airport foreign key (arrival_airport_id) references airport;
+    add constraint flight_flight_FK foreign key (alt_flight_id) references flight;
 alter table flight
-    add constraint fk_flight_dep_airport foreign key (dep_airport_id) references airport;
+    add constraint flight_arr_airport_FK foreign key (arrival_airport_id) references airport;
 alter table flight
-    add constraint fk_flight_flight foreign key (flight_id) references flight;
+    add constraint flight_dep_airport_FK foreign key (dep_airport_id) references airport;
 alter table seat
-    add constraint fk_seat_aiplane foreign key (airplane_id) references airplane;
+    add constraint flight_airplane_id_FK foreign key (airplane_id) references airplane
