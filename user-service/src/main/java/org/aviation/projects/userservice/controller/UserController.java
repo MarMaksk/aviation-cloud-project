@@ -1,5 +1,6 @@
 package org.aviation.projects.userservice.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.aviation.projects.userservice.dto.UserDTO;
 import org.aviation.projects.userservice.service.UserService;
 import org.aviation.projects.userservice.validations.ResponseErrorValidation;
@@ -17,7 +18,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("avia/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @CrossOrigin
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class UserController {

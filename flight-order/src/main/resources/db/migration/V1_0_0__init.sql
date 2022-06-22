@@ -1,4 +1,4 @@
-create table airplane
+create table if not exists airplane
 (
     id            bigserial not null,
     created_at    timestamp,
@@ -10,7 +10,7 @@ create table airplane
     model         varchar(255),
     primary key (id)
 );
-create table airport
+create table if not exists airport
 (
     id         bigserial not null,
     created_at timestamp,
@@ -21,7 +21,7 @@ create table airport
     icao_code  varchar(4),
     primary key (id)
 );
-create table examination
+create table if not exists examination
 (
     id          bigserial not null,
     created_at  timestamp,
@@ -32,7 +32,7 @@ create table examination
     airplane_id int8,
     primary key (id)
 );
-create table flight
+create table if not exists flight
 (
     id                 bigserial not null,
     created_at         timestamp,
@@ -52,7 +52,7 @@ create table flight
     dep_airport_id     int8,
     primary key (id)
 );
-create table seat
+create table if not exists seat
 (
     id          bigserial not null,
     created_at  timestamp,
