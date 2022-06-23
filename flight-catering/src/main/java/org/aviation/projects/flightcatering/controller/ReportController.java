@@ -26,7 +26,6 @@ public class ReportController {
         sendInvoiceToDeliver(productOrderId, reportService.generateDeliverInvoice(productOrderId), email);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=report-order" + productOrderId + ".pdf");
-//        httpHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(bytes);
     }
 

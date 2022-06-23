@@ -19,7 +19,7 @@ public class EmailService {
     UserRepository userRepository;
 
     public List<String> getEmails(ERole role) {
-        List<User> users = userRepository.findAllByRolesContains(role);
+        List<User> users = userRepository.findAllByRolesContainsAndDeletedFalseAndEmailIsNotNull(role);
         return users.stream().map(User::getEmail).collect(Collectors.toList());
     }
 

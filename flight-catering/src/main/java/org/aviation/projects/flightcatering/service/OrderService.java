@@ -24,6 +24,7 @@ public class OrderService implements CRUD<OrderDTO> {
     OrderDTOMapper orderMapper;
     OrderRepository repository;
     ModelMapper mapper;
+    MailSenderService mailSenderService;
 
     public Page<OrderDTO> findAll(Pageable pageable) {
         return repository.findAllByDeletedFalse(pageable).map(orderMapper::toDTO);
@@ -44,12 +45,23 @@ public class OrderService implements CRUD<OrderDTO> {
         order.setProductOrderId(info.getProductOrderId());
         order.setStatus(DeliveryStatus.CREATED);
         repository.save(order);
+        mailSenderService.sendForCaterers(
+                "New order", "New order has been created" +
+                        "\nProduct order id: " + order.getProductOrderId() +
+                        "\nIATA code: " + order.getIataCode() +
+                        "\nICAO code: " + order.getIcaoCode() +
+                        "\nLast date: " + order.getLastDate());
     }
 
     @Override
-    @Deprecated
     public void create(OrderDTO dto) throws Exception {
         repository.save(orderMapper.toEntity(dto));
+        mailSenderService.sendForCaterers(
+                "New order", "New order has been created" +
+                        "\nProduct order id: " + dto.getProductOrderId() +
+                        "\nIATA code: " + dto.getIataCode() +
+                        "\nICAO code: " + dto.getIcaoCode() +
+                        "\nLast date: " + dto.getLastDate());
     }
 
     @Override
