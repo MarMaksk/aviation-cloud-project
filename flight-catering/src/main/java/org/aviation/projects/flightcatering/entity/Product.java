@@ -1,8 +1,6 @@
 package org.aviation.projects.flightcatering.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.aviation.projects.commons.entity.AbstractEntity;
 
 import javax.persistence.*;
@@ -10,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Product extends AbstractEntity {
 
@@ -31,6 +30,7 @@ public class Product extends AbstractEntity {
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Tag> tags;
 
 }

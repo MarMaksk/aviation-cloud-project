@@ -1,6 +1,8 @@
 package org.aviation.projects.flightcatering.service;
 
 import org.aviation.projects.flightcatering.entity.Order;
+import org.aviation.projects.flightcatering.entity.Product;
+import org.aviation.projects.flightcatering.entity.Tag;
 import org.aviation.projects.flightcatering.exception.NoSuchOrderException;
 import org.aviation.projects.flightcatering.repository.OrderRepository;
 import lombok.AccessLevel;
@@ -13,8 +15,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +30,6 @@ public class ReportService {
     public byte[] generateCatererReport(Integer productOrderId, String responsible, String email) throws Exception {
         Order order = orderRepository.findByProductOrderIdAndDeletedFalse(productOrderId).orElseThrow(NoSuchOrderException::new);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(order.getProducts());
-//        JasperReport jasperReport = JasperCompileManager
-//                .compileReport(new FileInputStream(PATH + "caterer-report.jrxml"));
         Map<String, Object> map = new HashMap<>();
         map.put("responsible", responsible);
         map.put("email", email);
@@ -39,7 +38,8 @@ public class ReportService {
         map.put("lastDate", order.getLastDate().format(FORMATTER));
         map.put("icao", order.getIcaoCode());
         map.put("iata", order.getIataCode());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(PATH + "caterer-report.jasper", map, dataSource);
+        JasperPrint jasperPrint = JasperFillManager
+                .fillReport(getClass().getClassLoader().getResourceAsStream("reports/caterer-report.jasper"), map, dataSource);
         return JasperExportManager.exportReportToPdf(jasperPrint);
     }
 
@@ -47,15 +47,14 @@ public class ReportService {
         Order order = orderRepository.findByProductOrderIdAndDeletedFalse(productOrderId).orElseThrow(NoSuchOrderException::new);
         order.getProducts().removeAll(order.getDeliveredProducts());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(order.getProducts());
-//        JasperReport jasperReport = JasperCompileManager
-//                .compileReport(new FileInputStream(PATH + "delivery-invoice.jrxml"));
         Map<String, Object> map = new HashMap<>();
         map.put("orderNumber", order.getProductOrderId().toString().replace("-", ""));
         map.put("status", order.getStatus().getName());
         map.put("lastDate", order.getLastDate().format(FORMATTER));
         map.put("icao", order.getIcaoCode());
         map.put("iata", order.getIataCode());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(PATH + "delivery-invoice.jasper", map, dataSource);
+        JasperPrint jasperPrint = JasperFillManager
+                .fillReport(getClass().getClassLoader().getResourceAsStream("reports/delivery-invoice.jasper"), map, dataSource);
         return JasperExportManager.exportReportToPdf(jasperPrint);
     }
 
