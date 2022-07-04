@@ -1,5 +1,6 @@
 package org.aviation.projects.flightorder.repository;
 
+import io.micrometer.core.annotation.Timed;
 import org.aviation.projects.flightorder.entity.Flight;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     Optional<Flight> findByFlightNumber(String number);
 
+    @Timed
     @Query("FROM Flight fl " +
             "join fl.airplane airplane " +
             "join fl.departureAirport airportDep " +

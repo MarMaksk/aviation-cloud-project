@@ -1,5 +1,6 @@
 package org.aviation.projects.flightorder.repository;
 
+import io.micrometer.core.annotation.Timed;
 import org.aviation.projects.flightorder.entity.Examination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,5 +14,6 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
 
     Examination findAllByAirplane_IataCodeAndDeletedFalseOrderByDate(String iataCode);
 
+    @Timed
     Page<Examination> findAllByDeletedFalse(Pageable pageable);
 }

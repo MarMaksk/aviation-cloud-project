@@ -1,5 +1,6 @@
 package org.aviation.projects.userservice.controller;
 
+import io.micrometer.core.annotation.Timed;
 import org.aviation.projects.userservice.dto.UserDTO;
 import org.aviation.projects.userservice.entity.enums.ERole;
 import org.aviation.projects.userservice.payload.request.LoginRequest;
@@ -39,6 +40,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
     JWTTokenProvider jwtTokenProvider;
 
+    @Timed
     @PostMapping("/signin")
     public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
@@ -48,7 +50,7 @@ public class AuthController {
         return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt, loadRoles(loginRequest.getUsername())));
     }
 
-
+    @Timed
     @PostMapping("/signup")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);

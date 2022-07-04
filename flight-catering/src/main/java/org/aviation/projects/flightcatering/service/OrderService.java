@@ -1,5 +1,6 @@
 package org.aviation.projects.flightcatering.service;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.aviation.projects.flightcatering.dto.OrderDTO;
 import org.aviation.projects.flightcatering.entity.Order;
 import org.aviation.projects.flightcatering.exception.NoSuchOrderException;
@@ -16,15 +17,31 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Service
-@RequiredArgsConstructor
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderService implements CRUD<OrderDTO> {
 
-    OrderDTOMapper orderMapper;
-    OrderRepository repository;
-    ModelMapper mapper;
-    MailSenderService mailSenderService;
+    final OrderDTOMapper orderMapper;
+    final OrderRepository repository;
+    final ModelMapper mapper;
+    final MailSenderService mailSenderService;
+
+    AtomicInteger productCount;
+
+    public OrderService(OrderDTOMapper orderMapper,
+                        OrderRepository repository,
+                        ModelMapper mapper,
+                        MailSenderService mailSenderService,
+                        MeterRegistry meterRegistry) {
+        this.orderMapper = orderMapper;
+        this.repository = repository;
+        this.mapper = mapper;
+        this.mailSenderService = mailSenderService;
+        productCount = new AtomicInteger();
+        meterRegistry.gauge("productCount", productCount);
+    }
 
     public Page<OrderDTO> findAll(Pageable pageable) {
         return repository.findAllByDeletedFalse(pageable).map(orderMapper::toDTO);
@@ -79,6 +96,8 @@ public class OrderService implements CRUD<OrderDTO> {
         order.setProducts(newOrder.getProducts());
         order.setDeliveredProducts(newOrder.getDeliveredProducts());
         Order save = repository.save(order);
+        if (save.getStatus() == DeliveryStatus.FINISHED)
+            productCount.set(save.getDeliveredProducts().size());
         return orderMapper.toDTO(save);
     }
 

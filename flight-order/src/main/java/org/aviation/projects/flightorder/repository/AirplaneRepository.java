@@ -1,5 +1,6 @@
 package org.aviation.projects.flightorder.repository;
 
+import io.micrometer.core.annotation.Timed;
 import org.aviation.projects.flightorder.entity.Airplane;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +12,7 @@ import java.util.Optional;
 public interface AirplaneRepository extends JpaRepository<Airplane, Long> {
 
     Optional<Airplane> findByIataCodeAndDeletedFalse(String iata);
-
+    @Timed
     Page<Airplane> findAllByDeletedFalse(Pageable pageable);
 
     List<Airplane> findAllByDeletedFalseAndBusyFalse();

@@ -11,7 +11,7 @@
 
     <artifactId>flight-catering</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>FlightCatering</name>
+    <name>flight-catering</name>
     <description>Demo project for Spring Boot</description>
 
     <dependencies>

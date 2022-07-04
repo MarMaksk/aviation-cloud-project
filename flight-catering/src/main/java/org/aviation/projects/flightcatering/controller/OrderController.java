@@ -1,5 +1,6 @@
 package org.aviation.projects.flightcatering.controller;
 
+import io.micrometer.core.annotation.Timed;
 import org.aviation.projects.flightcatering.dto.OrderDTO;
 import org.aviation.projects.flightcatering.exception.NoSuchOrderException;
 import org.aviation.projects.flightcatering.service.OrderService;
@@ -32,6 +33,7 @@ public class OrderController {
         return orderService.findAll(request);
     }
 
+    @Timed("getOrder")
     @GetMapping("/{productOrderId}")
     public OrderDTO getOrder(@PathVariable Integer productOrderId) throws NoSuchOrderException {
         return orderService.findByproductOrderId(productOrderId);

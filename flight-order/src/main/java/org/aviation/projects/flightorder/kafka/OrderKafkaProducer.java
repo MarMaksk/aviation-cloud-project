@@ -1,5 +1,6 @@
 package org.aviation.projects.flightorder.kafka;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.aviation.projects.commons.entity.InfoForOrder;
 import org.slf4j.Logger;
@@ -22,7 +23,8 @@ public class OrderKafkaProducer {
     @Value("catering")
     private String topic;
 
-    public void send(InfoForOrder data){
+    @Timed("sendInfoToCateringServiceByKafka")
+    public void send(InfoForOrder data) {
         LOG.info("sending data='{}' to topic='{}'", data, topic);
         Message<InfoForOrder> message = MessageBuilder
                 .withPayload(data)
