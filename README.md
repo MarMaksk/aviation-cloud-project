@@ -1,11 +1,15 @@
 # aviation-cloud-project
 
-Конфигурации хранятся на: https://github.com/MarMaksk/spring-cloud-config-properties/tree/master
+____
+[Хранилище конфигураций](https://github.com/MarMaksk/spring-cloud-config-properties)
+____
+Используются: Spring Cloud Config, Bus, Kafka, Feign, Gateway, Eureka
+____
+To run project do:
 
-Используются: Spring Cloud Config, Bus, Kafka, Feign, Gateway, Eurika
+```bash
+docker-compose up
+```
 
-Для запуска в консоли БД требуется предварительно сделать:
-
-CREATE DATABASE catering;<br>
-CREATE DATABASE orders;<br>
-CREATE DATABASE users;
+____
+[Grafana](localhost:3000) кастомный дашборд ещё не готов*
