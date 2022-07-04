@@ -3,6 +3,8 @@
 ____
 [Хранилище конфигураций](https://github.com/MarMaksk/spring-cloud-config-properties)
 ____
+[Front-end](https://github.com/MarMaksk/aviation-project-client)
+____
 Используются: Spring Cloud Config, Bus, Kafka, Feign, Gateway, Eureka
 ____
 To run project do:
@@ -12,4 +14,5 @@ docker-compose up
 ```
 
 ____
-[Grafana](localhost:3000) кастомный дашборд ещё не готов*
+[Grafana](https://localhost:3000) 
+кастомный дашборд ещё не готов*
