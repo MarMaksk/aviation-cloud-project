@@ -14,6 +14,6 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
 
     Examination findAllByAirplane_IataCodeAndDeletedFalseOrderByDate(String iataCode);
 
-    @Timed
+    @Timed("findAllExamination")
     Page<Examination> findAllByDeletedFalse(Pageable pageable);
 }

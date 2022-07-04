@@ -23,8 +23,9 @@ public class FlightController {
     FlightService flightService;
 
     @PostMapping
-    public void create(@Valid @RequestBody FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
-        flightService.create(dto);
+    public void create(@Valid @RequestBody FlightDTO dto, @RequestHeader("Authorization") String token)
+            throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
+        flightService.create(dto, token);
     }
 
     @PutMapping

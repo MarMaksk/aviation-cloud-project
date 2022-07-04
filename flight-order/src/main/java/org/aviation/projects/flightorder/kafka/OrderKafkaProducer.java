@@ -23,12 +23,12 @@ public class OrderKafkaProducer {
     @Value("catering")
     private String topic;
 
-    @Timed("sendInfoToCateringServiceByKafka")
-    public void send(InfoForOrder data) {
+    public void send(InfoForOrder data, String token) {
         LOG.info("sending data='{}' to topic='{}'", data, topic);
         Message<InfoForOrder> message = MessageBuilder
                 .withPayload(data)
                 .setHeader(KafkaHeaders.TOPIC, topic)
+                .setHeader("Authorization", token)
                 .build();
         kafkaTemplate.send(message);
     }

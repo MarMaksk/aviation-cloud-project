@@ -25,7 +25,7 @@ public class OrderKafkaConsumer {
         headers.keySet().forEach(key -> {
             LOG.info("{}: {}", key, headers.get(key));
         });
-        orderService.createByInfo(data);
+        orderService.createByInfo(data, headers.get("Authorization").toString());
     }
 
 }

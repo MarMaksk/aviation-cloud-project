@@ -29,8 +29,8 @@ public class MailSenderService implements ISender {
     private String username;
 
     @Override
-    public void sendForCaterers(String subject, String message) {
-        List<String> catererEmailsEmails = userClient.getCatererEmailsEmails();
+    public void sendForCaterers(String subject, String message, String token) {
+        List<String> catererEmailsEmails = userClient.getCatererEmailsEmails(token);
         for (String email : catererEmailsEmails) {
             try {
                 send(email, subject, message);

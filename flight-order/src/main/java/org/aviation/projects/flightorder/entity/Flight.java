@@ -21,6 +21,7 @@ public class Flight extends AbstractEntity {
     @Column(updatable = false)
     private boolean regular;
 
+    @EqualsAndHashCode.Exclude
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
@@ -69,7 +70,7 @@ public class Flight extends AbstractEntity {
 
     @PrePersist
     public void prePersist() {
-        this.setProductOrderId(new Random().nextInt());
+        this.setProductOrderId(this.hashCode());
     }
 
 }

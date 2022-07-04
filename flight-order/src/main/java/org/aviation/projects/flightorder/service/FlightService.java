@@ -19,6 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +46,10 @@ public class FlightService implements CRUD<FlightDTO> {
                 old.getPassengersCount(),
                 old.getDeparture(),
                 old.getFlightNumber());
-        return mapper.toDTOs(allAlternativeFlights);
+        List<Flight> filtered = allAlternativeFlights.stream()
+                        .filter(x -> x.getStatus() == FlightStatus.CREATED || x.getStatus() == FlightStatus.READY)
+                        .collect(Collectors.toList());
+        return mapper.toDTOs(filtered);
     }
 
     public List<FlightDTO> findAll() {
@@ -53,18 +57,21 @@ public class FlightService implements CRUD<FlightDTO> {
         return mapper.toDTOs(all);
     }
 
+    public void create(FlightDTO dto, String token) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
+        Flight flight = mapper.toEntity(dto);
+        flight.getAirplane().setBusy(true);
+        flight.setStatus(FlightStatus.CREATED);
+        repository.save(flight);
+        InfoForOrder info = new InfoForOrder(dto.getIcaoCodeDeparture(), dto.getIataCode(), dto.getDeparture(), flight.getProductOrderId());
+        sender.send(info, token);
+    }
+
     @Override
     public void create(FlightDTO dto) throws NoSuchAirplaneException, NoSuchAirportException, NoSuchFlightException {
         Flight flight = mapper.toEntity(dto);
         flight.getAirplane().setBusy(true);
         flight.setStatus(FlightStatus.CREATED);
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        LocalDateTime dateTime = LocalDateTime.parse(dto.getDeparture().format(formatter), formatter);
-//        System.out.println(dateTime);
-//        flight.setDeparture(dateTime);
         repository.save(flight);
-        InfoForOrder info = new InfoForOrder(dto.getIcaoCodeDeparture(), dto.getIataCode(), dto.getDeparture(), flight.getProductOrderId());
-        sender.send(info);
     }
 
     @Override
@@ -86,8 +93,10 @@ public class FlightService implements CRUD<FlightDTO> {
         airplaneRepository.save(flight.getAirplane());
         // Замещаем информацию о старом полёте новой информацией
         modelMapper.map(entity, flight);
-        // Замаем новый самолёт
-        flight.getAirplane().setBusy(true);
+        // Занимаем новый самолёт
+        flight.getAirplane().setBusy(
+                flight.getStatus() != FlightStatus.COMPLETED && flight.getStatus() != FlightStatus.CANCELLATION
+        );
         // Сохраняем новый полёт
         return mapper.toDTO(repository.save(flight));
     }

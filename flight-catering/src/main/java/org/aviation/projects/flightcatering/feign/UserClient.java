@@ -3,6 +3,7 @@ package org.aviation.projects.flightcatering.feign;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
@@ -10,6 +11,6 @@ import java.util.List;
 public interface UserClient {
     @Timed("getCatererEmails")
     @GetMapping("/email")
-    List<String> getCatererEmailsEmails();
+    List<String> getCatererEmailsEmails(@RequestHeader("Authorization") String token);
 
 }

@@ -16,7 +16,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     Optional<Flight> findByFlightNumber(String number);
 
-    @Timed
+    @Timed("findAltFlights")
     @Query("FROM Flight fl " +
             "join fl.airplane airplane " +
             "join fl.departureAirport airportDep " +

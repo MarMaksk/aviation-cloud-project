@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface AirportRepository extends JpaRepository<Airport, Long> {
     Optional<Airport> findByIcaoCodeAndDeletedFalse(String icaoCode);
 
-    @Timed
+    @Timed("findAllAirports")
     Page<Airport> findAllByDeletedFalse(Pageable pageable);
 }

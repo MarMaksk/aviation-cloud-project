@@ -54,7 +54,7 @@ public class OrderService implements CRUD<OrderDTO> {
         return orderMapper.toDTO(order);
     }
 
-    public void createByInfo(InfoForOrder info) {
+    public void createByInfo(InfoForOrder info, String token) {
         Order order = new Order();
         order.setIataCode(info.getIataCode());
         order.setIcaoCode(info.getIcaoCode());
@@ -67,7 +67,7 @@ public class OrderService implements CRUD<OrderDTO> {
                         "\nProduct order id: " + order.getProductOrderId() +
                         "\nIATA code: " + order.getIataCode() +
                         "\nICAO code: " + order.getIcaoCode() +
-                        "\nLast date: " + order.getLastDate());
+                        "\nLast date: " + order.getLastDate(), token);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class OrderService implements CRUD<OrderDTO> {
                         "\nProduct order id: " + dto.getProductOrderId() +
                         "\nIATA code: " + dto.getIataCode() +
                         "\nICAO code: " + dto.getIcaoCode() +
-                        "\nLast date: " + dto.getLastDate());
+                        "\nLast date: " + dto.getLastDate(), "");
     }
 
     @Override

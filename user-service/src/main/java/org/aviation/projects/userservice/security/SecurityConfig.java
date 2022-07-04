@@ -42,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(SecurityConstants.SIGN_UP_URLS).permitAll()
-                .antMatchers("/email/**").hasIpAddress("localhost:9000")
+                .antMatchers("/email/**").hasAnyRole("CATERER", "SYSTEM", "MANAGER")
+                .antMatchers("/actuator/**").permitAll()
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

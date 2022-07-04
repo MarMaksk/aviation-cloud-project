@@ -15,4 +15,3 @@ docker-compose up
 
 ____
 [Grafana](https://localhost:3000) 
-кастомный дашборд ещё не готов*
