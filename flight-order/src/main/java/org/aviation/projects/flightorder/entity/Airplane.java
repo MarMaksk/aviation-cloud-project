@@ -14,6 +14,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @Table(name = "airplane")
 public class Airplane extends AbstractEntity {
+
     private String model;
 
     /*
@@ -21,7 +22,7 @@ public class Airplane extends AbstractEntity {
      */
     @Column(length = 3, unique = true)
     @Pattern(regexp = "[A-Z][0-9][0-9]")
-    private String iataCode;
+    private String icaoCode;
 
     private int loadCapacity;
 

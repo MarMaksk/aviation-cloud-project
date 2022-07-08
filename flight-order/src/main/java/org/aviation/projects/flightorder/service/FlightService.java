@@ -41,8 +41,8 @@ public class FlightService implements CRUD<FlightDTO> {
 
     public List<FlightDTO> findAlternativeFlights(String flightNumber) throws NoSuchFlightException {
         Flight old = repository.findByFlightNumber(flightNumber).orElseThrow(NoSuchFlightException::new);
-        List<Flight> allAlternativeFlights = repository.findAllAlternativeFlights(old.getDepartureAirport().getIcaoCode(),
-                old.getArrivalAirport().getIcaoCode(),
+        List<Flight> allAlternativeFlights = repository.findAllAlternativeFlights(old.getDepartureAirport().getIataCode(),
+                old.getArrivalAirport().getIataCode(),
                 old.getPassengersCount(),
                 old.getDeparture(),
                 old.getFlightNumber());
@@ -62,7 +62,7 @@ public class FlightService implements CRUD<FlightDTO> {
         flight.getAirplane().setBusy(true);
         flight.setStatus(FlightStatus.CREATED);
         repository.save(flight);
-        InfoForOrder info = new InfoForOrder(dto.getIcaoCodeDeparture(), dto.getIataCode(), dto.getDeparture(), flight.getProductOrderId());
+        InfoForOrder info = new InfoForOrder(dto.getIcaoCode(), dto.getIataCodeDeparture(), dto.getDeparture(), flight.getProductOrderId());
         sender.send(info, token);
     }
 

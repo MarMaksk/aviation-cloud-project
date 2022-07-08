@@ -33,7 +33,7 @@ public class AirportService implements CRUD<AirportDTO> {
 
     @Override
     public AirportDTO findByCode(String code) throws NoSuchAirportException {
-        Airport airport = airportRepository.findByIcaoCodeAndDeletedFalse(code).orElseThrow(NoSuchAirportException::new);
+        Airport airport = airportRepository.findByIataCodeAndDeletedFalse(code).orElseThrow(NoSuchAirportException::new);
         return airportDTOMapper.toDTO(airport);
     }
 
@@ -46,7 +46,7 @@ public class AirportService implements CRUD<AirportDTO> {
 
     @Override
     public void delete(String icaoCode) throws Exception {
-        Airport airport = airportRepository.findByIcaoCodeAndDeletedFalse(icaoCode).orElseThrow(NoSuchAirportException::new);
+        Airport airport = airportRepository.findByIataCodeAndDeletedFalse(icaoCode).orElseThrow(NoSuchAirportException::new);
         airport.setDeleted(true);
         airportRepository.save(airport);
     }

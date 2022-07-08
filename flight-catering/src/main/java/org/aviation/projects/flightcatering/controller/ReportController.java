@@ -1,5 +1,7 @@
 package org.aviation.projects.flightcatering.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.aviation.projects.flightcatering.service.ISender;
 import org.aviation.projects.flightcatering.service.ReportService;
 import lombok.AccessLevel;
@@ -15,12 +17,14 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@Api(value = "Report and invoice controller")
 public class ReportController {
 
     ReportService reportService;
     ISender senderService;
 
     @GetMapping("/caterer/{productOrderId}/{responsible}/{email}")
+    @ApiOperation(value = "Caterer report", response = Iterable.class)
     public ResponseEntity<byte[]> generateCatererReport(@PathVariable Integer productOrderId, @PathVariable String responsible, @PathVariable String email) throws Exception {
         byte[] bytes = reportService.generateCatererReport(productOrderId, responsible, email);
         sendInvoiceToDeliver(productOrderId, reportService.generateDeliverInvoice(productOrderId), email);
@@ -30,6 +34,7 @@ public class ReportController {
     }
 
     @GetMapping("/deliver/{productOrderId}")
+    @ApiOperation(value = "Delivery invoice", response = Iterable.class)
     public ResponseEntity<byte[]> generateDeliverInvoice(@PathVariable Integer productOrderId) throws Exception {
         byte[] bytes = reportService.generateDeliverInvoice(productOrderId);
         HttpHeaders httpHeaders = new HttpHeaders();

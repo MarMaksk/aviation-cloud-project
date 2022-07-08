@@ -1,5 +1,7 @@
 package org.aviation.projects.flightcatering.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.aviation.projects.flightcatering.exception.NoSuchOrderException;
 import org.aviation.projects.flightcatering.service.UtilService;
 import lombok.AccessLevel;
@@ -15,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/delivery")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@Api(value = "Controller for send info from catering")
 public class DeliveryController {
 
     UtilService utilService;
 
     @GetMapping("/{productOrderId}")
+    @ApiOperation(value = "check delivery order for flight", response = DeliveryStatus.class)
     public DeliveryStatus checkDelivery(@PathVariable Integer productOrderId) throws NoSuchOrderException {
         return utilService.checkDeliver(productOrderId);
     }

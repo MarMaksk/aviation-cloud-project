@@ -20,7 +20,7 @@ public class ExaminationDTOMapper implements EntityToDTOMapper<Examination, Exam
     @Override
     public Examination toEntity(ExaminationDTO dto) throws NoSuchAirplaneException {
         Examination examination = mapper.map(dto, Examination.class);
-        Airplane airplane = repository.findByIataCodeAndDeletedFalse(dto.getIataCode()).orElseThrow(NoSuchAirplaneException::new);
+        Airplane airplane = repository.findByIcaoCodeAndDeletedFalse(dto.getIataCode()).orElseThrow(NoSuchAirplaneException::new);
         examination.setAirplane(airplane);
         return examination;
     }
@@ -28,7 +28,7 @@ public class ExaminationDTOMapper implements EntityToDTOMapper<Examination, Exam
     @Override
     public ExaminationDTO toDTO(Examination entity) {
         ExaminationDTO dto = mapper.map(entity, ExaminationDTO.class);
-        dto.setIataCode(entity.getAirplane().getIataCode());
+        dto.setIataCode(entity.getAirplane().getIcaoCode());
         return dto;
     }
 }

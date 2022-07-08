@@ -20,7 +20,7 @@ public class SeatDTOMapper implements EntityToDTOMapper<Seat, SeatDTO> {
     @Override
     public Seat toEntity(SeatDTO dto) throws NoSuchAirplaneException {
         Seat seat = mapper.map(dto, Seat.class);
-        Airplane airplane = repository.findByIataCodeAndDeletedFalse(dto.getIataCode())
+        Airplane airplane = repository.findByIcaoCodeAndDeletedFalse(dto.getIataCode())
                 .orElseThrow(NoSuchAirplaneException::new);
         seat.setAirplane(airplane);
         return seat;
@@ -29,7 +29,7 @@ public class SeatDTOMapper implements EntityToDTOMapper<Seat, SeatDTO> {
     @Override
     public SeatDTO toDTO(Seat entity) {
         mapper.createTypeMap(Seat.class, SeatDTO.class)
-                .addMapping(en -> en.getAirplane().getIataCode(), SeatDTO::setIataCode);
+                .addMapping(en -> en.getAirplane().getIcaoCode(), SeatDTO::setIataCode);
         return mapper.map(entity, SeatDTO.class);
     }
 }

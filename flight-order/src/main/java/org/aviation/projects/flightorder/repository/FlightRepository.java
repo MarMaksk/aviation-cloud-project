@@ -21,8 +21,8 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             "join fl.airplane airplane " +
             "join fl.departureAirport airportDep " +
             "join fl.arrivalAirport airportArr " +
-            "where airportDep.icaoCode = :icaoCodeDep " +
-            "and airportArr.icaoCode =:icaoCodeArr " +
+            "where airportDep.iataCode = :icaoCodeDep " +
+            "and airportArr.iataCode =:icaoCodeArr " +
             "and airplane.loadCapacity >= :capacity " +
             "and fl.departure >= :departure " +
             "and fl.flightNumber <> :flightNumber")

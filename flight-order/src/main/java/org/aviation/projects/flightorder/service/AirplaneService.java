@@ -39,7 +39,7 @@ public class AirplaneService implements CRUD<AirplaneDTO> {
 
     @Override
     public AirplaneDTO findByCode(String code) throws Exception {
-        return mapper.toDTO(repository.findByIataCodeAndDeletedFalse(code).orElseThrow(NoSuchAirplaneException::new));
+        return mapper.toDTO(repository.findByIcaoCodeAndDeletedFalse(code).orElseThrow(NoSuchAirplaneException::new));
     }
 
 
@@ -51,7 +51,7 @@ public class AirplaneService implements CRUD<AirplaneDTO> {
 
     @Override
     public void delete(String iataCode) throws NoSuchAirplaneException {
-        Airplane airplane = repository.findByIataCodeAndDeletedFalse(iataCode).orElseThrow(NoSuchAirplaneException::new);
+        Airplane airplane = repository.findByIcaoCodeAndDeletedFalse(iataCode).orElseThrow(NoSuchAirplaneException::new);
         airplane.setDeleted(true);
         repository.save(airplane);
     }

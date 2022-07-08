@@ -1,11 +1,44 @@
+server:
+  port: 8080
 spring:
+  application:
+    name: gateway
   cloud:
     gateway:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://localhost:4200"
+            allowedOrigins: "*"
             allowedHeaders: "*"
             allowedMethods:
               - GET
               - POST
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: flight-catering
+          uri: lb://flight-catering
+          predicates:
+            - Path=/avia/catering/**
+          filters:
+            - StripPrefix=1
+        - id: flight-order
+          uri: lb://flight-order
+          predicates:
+            - Path=/avia/order/**
+          filters:
+            - StripPrefix=2
+        - id: flight-user
+          uri: lb://flight-user
+          predicates:
+            - Path=/avia/**
+          filters:
+            - StripPrefix=1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+token:
+  prefix: Bearer

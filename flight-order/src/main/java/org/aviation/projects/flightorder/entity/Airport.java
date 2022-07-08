@@ -17,7 +17,7 @@ public class Airport extends AbstractEntity {
     /* airplane */
     @Column(length = 4, unique = true)
     @Pattern(regexp = "^\\d+$")
-    private String icaoCode;
+    private String iataCode;
 
     private String country;
 

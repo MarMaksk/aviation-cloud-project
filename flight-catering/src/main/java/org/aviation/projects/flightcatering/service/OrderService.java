@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -47,6 +48,7 @@ public class OrderService implements CRUD<OrderDTO> {
         return repository.findAllByDeletedFalse(pageable).map(orderMapper::toDTO);
     }
 
+    @Transactional
     public OrderDTO findByproductOrderId(Integer productOrderId) throws NoSuchOrderException {
         Order order = repository.findByProductOrderIdAndDeletedFalse(
                 productOrderId

@@ -17,9 +17,9 @@ import java.util.Set;
 @Table(name = "orders")
 @NoArgsConstructor
 public class Order extends AbstractEntity {
-    @Column(name = "icao_code", length = 4)
+    @Column(name = "icao_code", length = 3)
     private String icaoCode; /* airplane */
-    @Column(name = "iata_code", length = 3)
+    @Column(name = "iata_code", length = 4)
     private String iataCode; /* airport */
     /*
     Крайнее время для поставки
