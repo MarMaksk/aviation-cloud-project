@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Random;
@@ -26,10 +27,11 @@ public class ProductService implements CRUD<ProductDTO> {
     ProductRepository productRepository;
     ModelMapper mapper;
 
+    @Transactional
     public Page<ProductDTO> findAll(Pageable pageable) {
         return productRepository.findAllByDeletedFalse(pageable).map(productMapper::toDTO);
     }
-
+    @Transactional
     public List<ProductDTO> findAll() {
         return productMapper.toDTOs(productRepository.findAll());
     }

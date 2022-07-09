@@ -47,7 +47,6 @@ public class OrderController {
     @PutMapping
     @ApiOperation(value = "update order")
     public void update(@RequestBody @Valid OrderDTO orderDTO) throws Exception {
-        System.out.println(orderDTO);
         orderService.update(orderDTO);
     }
 

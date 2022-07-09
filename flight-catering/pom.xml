@@ -48,14 +48,6 @@
         </dependency>
 
         <dependency>
-            <groupId>local.jasperFont</groupId>
-            <artifactId>local.jasperFont</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/reports/defavu-serif.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>org.aviation.projects</groupId>
             <artifactId>commons</artifactId>
             <version>1.0</version>

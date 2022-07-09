@@ -4,17 +4,19 @@ import lombok.Getter;
 
 @Getter
 public enum DeliveryStatus {
-    CREATED("Создана"),
-    PROCESSED("Обрабатывается"),
-    IN_PROGRESS("В процессе"),
-    FINISHED("Завершена"),
-    CANCELLATION("Отменена"),
-    EXPIRED("Просрочена");
+    CREATED("Создана", "CREATED"),
+    PROCESSED("Обрабатывается", "PROCESSED"),
+    IN_PROGRESS("В процессе", "IN_PROGRESS"),
+    FINISHED("Завершена", "FINISHED"),
+    CANCELLATION("Отменена", "CANCELLATION"),
+    EXPIRED("Просрочена", "EXPIRED");
 
     private String name;
+    private String status;
 
-    DeliveryStatus(String name) {
+    DeliveryStatus(String name, String status) {
         this.name = name;
+        this.status = status;
     }
 
     public static DeliveryStatus fromString(String name) {
@@ -25,4 +27,5 @@ public enum DeliveryStatus {
         }
         throw new IllegalArgumentException("No enum constant with name " + name);
     }
+
 }
