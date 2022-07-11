@@ -1,5 +1,6 @@
 package org.aviation.projects.flightcatering.service;
 
+import feign.RetryableException;
 import lombok.RequiredArgsConstructor;
 import org.aviation.projects.flightcatering.feign.UserClient;
 import org.slf4j.Logger;
@@ -30,13 +31,17 @@ public class MailSenderService implements ISender {
 
     @Override
     public void sendForCaterers(String subject, String message, String token) {
-        List<String> catererEmailsEmails = userClient.getCatererEmailsEmails(token);
-        for (String email : catererEmailsEmails) {
-            try {
-                send(email, subject, message);
-            } catch (MailException exception) {
-                LOG.error("Error sending email", exception);
+        try {
+            List<String> catererEmailsEmails = userClient.getCatererEmailsEmails(token);
+            for (String email : catererEmailsEmails) {
+                try {
+                    send(email, subject, message);
+                } catch (MailException exception) {
+                    LOG.error("Error sending email", exception);
+                }
             }
+        } catch (RetryableException ex) {
+            LOG.error("Error sending email", ex);
         }
     }
 
