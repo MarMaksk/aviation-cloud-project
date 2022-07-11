@@ -5,7 +5,7 @@ create table if not exists airplane
     updated_at    timestamp,
     deleted       boolean   not null,
     busy          boolean   not null,
-    iata_code     varchar(3),
+    icao_code     varchar(3),
     load_capacity int4      not null,
     model         varchar(255),
     primary key (id)
@@ -18,7 +18,7 @@ create table if not exists airport
     deleted    boolean   not null,
     city       varchar(255),
     country    varchar(255),
-    icao_code  varchar(4),
+    iata_code  varchar(4),
     primary key (id)
 );
 create table if not exists examination
@@ -65,9 +65,9 @@ create table if not exists seat
     primary key (id)
 );
 alter table airplane
-    add constraint airplane_AK unique (iata_code);
+    add constraint airplane_AK unique (icao_code);
 alter table airport
-    add constraint airport_AK unique (icao_code);
+    add constraint airport_AK unique (iata_code);
 alter table flight
     add constraint flight_number_AK unique (flight_number);
 alter table flight

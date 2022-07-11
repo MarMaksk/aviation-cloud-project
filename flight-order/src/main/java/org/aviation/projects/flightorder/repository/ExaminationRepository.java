@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface ExaminationRepository extends JpaRepository<Examination, Long> {
 
-    List<Examination> findAllByAirplane_IataCodeAndDeletedFalse(String iataCode);
+    List<Examination> findAllByAirplane_IcaoCodeAndDeletedFalse(String icaoCode);
 
-    Examination findAllByAirplane_IataCodeAndDeletedFalseOrderByDate(String iataCode);
+    Examination findAllByAirplane_IcaoCodeAndDeletedFalseOrderByDate(String icaoCode);
 
     @Timed("findAllExamination")
     Page<Examination> findAllByDeletedFalse(Pageable pageable);

@@ -30,7 +30,7 @@ public class ExaminationService implements CRUD<ExaminationDTO> {
 
     @Override
     public ExaminationDTO findByCode(String iataCode) throws Exception {
-        return mapper.toDTO(examinationRepository.findAllByAirplane_IataCodeAndDeletedFalseOrderByDate(iataCode));
+        return mapper.toDTO(examinationRepository.findAllByAirplane_IcaoCodeAndDeletedFalseOrderByDate(iataCode));
     }
 
     @Override

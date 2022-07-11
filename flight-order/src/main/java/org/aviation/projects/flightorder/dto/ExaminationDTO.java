@@ -24,6 +24,6 @@ public class ExaminationDTO {
  */
     @Size(max = 3)
     @ApiModelProperty(value = "Airplane code", example = "M01")
-    private String iataCode;
+    private String icaoCode;
 
 }
