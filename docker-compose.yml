@@ -2,14 +2,18 @@ version: '3.7'
 services:
 
   zookeeper:
-    image: wurstmeister/zookeeper
+    image: confluentinc/cp-zookeeper
     container_name: zookeeper
     ports:
       - "2181:2181"
     restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SYNC_LIMIT: 2
 
   kafka:
-    image: wurstmeister/kafka
+    image: confluentinc/cp-kafka
     container_name: kafka
     ports:
       - "9094:9094"
@@ -36,7 +40,7 @@ services:
 
   config-service:
     image: 'config-service:latest'
-    container_name: config-server
+    container_name: config-server-app
     build:
       context: ./config-service
       dockerfile: Dockerfile
@@ -49,7 +53,7 @@ services:
 
   eureka-service:
     image: 'eureka-discovery-service:latest'
-    container_name: eureka-service
+    container_name: eureka-service-app
     build:
       context: ./eureka-discovery-service
       dockerfile: Dockerfile
@@ -60,7 +64,7 @@ services:
 
   gateway:
     image: 'gateway:latest'
-    container_name: gateway
+    container_name: gateway-app
     build:
       context: ./gateway
       dockerfile: Dockerfile
@@ -76,7 +80,7 @@ services:
 
   user-service:
     image: 'user-service:latest'
-    container_name: user-service
+    container_name: user-service-app
     build:
       context: ./user-service
       dockerfile: Dockerfile
@@ -93,7 +97,7 @@ services:
 
   flight-catering:
     image: 'flight-catering:latest'
-    container_name: flight-catering
+    container_name: flight-catering-app
     build:
       context: ./flight-catering
       dockerfile: Dockerfile
@@ -110,7 +114,7 @@ services:
 
   flight-order:
     image: 'flight-order:latest'
-    container_name: flight-order
+    container_name: flight-order-app
     build:
       context: ./flight-order
       dockerfile: Dockerfile
@@ -153,5 +157,65 @@ services:
         aliases:
           - prometheus
 
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.2.3
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - xpack.monitoring.templates.enabled=true
+      - xpack.watcher.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - elk
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.2.3
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+    networks:
+      - elk
+
+  logstash:
+    container_name: logstash
+    build: ./logstash
+    networks:
+      - elk
+    command: logstash -f /conf/logstash-spring-boot.conf
+    ports:
+      - "5044:5044"
+    links:
+      - elasticsearch
+
+  filebeat:
+    container_name: filebeat
+    build: ./filebeat
+    links:
+      - flight-catering
+      - logstash
+    networks:
+      - elk
+    volumes:
+      # needed to access all docker logs :
+      - "/var/lib/docker/containers:/var/lib/docker/containers"
+      # needed to access additional information about containers
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
 networks:
   monitoring:
+  elk:
+    driver: "bridge"
+
+volumes:
+  elasticsearch-data:
+
+

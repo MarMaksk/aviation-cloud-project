@@ -1,0 +1,28 @@
+filebeat.autodiscover:
+  providers:
+    # искать docker контейнер
+    - type: docker
+      templates:
+        - condition:
+            contains:
+              # имя которого
+              docker.container.name: app
+          # определим конфигурацию сбора для этого контейнера
+          config:
+            - type: container
+              paths:
+                - /var/lib/docker/containers/${data.docker.container.id}/*.log
+              # исключим лог-сообщения asgi-сервера
+              exclude_lines: ["^INFO:"]
+
+
+output:
+  logstash.hosts: ["logstash:5044"]
+
+# Write Filebeat own logs only to file to avoid catching them with itself in docker log files
+logging.to_files: true
+logging.to_syslog: false
+
+# X-pack optional module
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.hosts: ["elasticsearch:9200"]
