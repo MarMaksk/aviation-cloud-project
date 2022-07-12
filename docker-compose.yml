@@ -2,7 +2,7 @@ version: '3.7'
 services:
 
   zookeeper:
-Ьфлу    image: wurstmeister/zookeeper
+    image: wurstmeister/zookeeper
     container_name: zookeeper
     ports:
       - "2181:2181"
