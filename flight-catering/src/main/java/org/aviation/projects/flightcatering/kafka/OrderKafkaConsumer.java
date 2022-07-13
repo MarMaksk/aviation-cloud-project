@@ -1,8 +1,8 @@
 package org.aviation.projects.flightcatering.kafka;
 
-import org.aviation.projects.flightcatering.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.aviation.projects.commons.entity.InfoForOrder;
+import org.aviation.projects.flightcatering.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -22,9 +22,7 @@ public class OrderKafkaConsumer {
     public void receive(@Payload InfoForOrder data,
                         @Headers MessageHeaders headers) {
         LOG.info("received data='{}'", data);
-        headers.keySet().forEach(key -> {
-            LOG.info("{}: {}", key, headers.get(key));
-        });
+        headers.keySet().forEach(key -> LOG.info("{}: {}", key, headers.get(key)));
         orderService.createByInfo(data, headers.get("Authorization").toString());
     }
 

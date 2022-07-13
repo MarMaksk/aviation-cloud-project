@@ -1,5 +1,8 @@
 package org.aviation.projects.userservice.service;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.aviation.projects.userservice.dto.UserDTO;
 import org.aviation.projects.userservice.entity.User;
 import org.aviation.projects.userservice.entity.enums.ERole;
@@ -7,9 +10,6 @@ import org.aviation.projects.userservice.exceptions.UserExistException;
 import org.aviation.projects.userservice.payload.request.SignupRequest;
 import org.aviation.projects.userservice.repository.UserRepository;
 import org.aviation.projects.userservice.service.mapper.UserDTOMapper;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +31,7 @@ public class UserService {
     UserDTOMapper userDTOMapper;
 
     public User createUser(SignupRequest userIn) {
+        LOG.info("createUser method called in UserService");
         User user = new User();
         user.setFirstname(userIn.getFirstname());
         user.setLastname(userIn.getLastname());
@@ -47,6 +48,7 @@ public class UserService {
     }
 
     public UserDTO updateUser(UserDTO userDTO, Principal principal) {
+        LOG.info("updateUser method called in UserService");
         User user = getUserByPrincipal(principal.getName());
         mapper.map(userDTO, user);
         return userDTOMapper.toDTO(
@@ -55,16 +57,19 @@ public class UserService {
     }
 
     private User getUserByPrincipal(String username) {
+        LOG.info("getUserByPrincipal method called in UserService");
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found. Name " + username));
     }
 
     public UserDTO getCurrentUser(String username) {
+        LOG.info("getCurrentUser method called in UserService");
         User user = getUserByPrincipal(username);
         return userDTOMapper.toDTO(user);
     }
 
     public UserDTO getUserById(Long id) {
+        LOG.info("getUserById method called in UserService");
         return userDTOMapper.toDTO(
                 userRepository.findById(id)
                         .orElseThrow(() -> new UserExistException("User not found"))

@@ -1,8 +1,8 @@
 <configuration>
 
-    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <springProperty name="appName" source="spring.application.name" defaultValue="spring" />
+    <springProperty name="appName" source="spring.application.name" defaultValue="spring"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

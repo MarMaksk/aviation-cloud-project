@@ -1,8 +1,10 @@
 package org.aviation.projects.userservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.aviation.projects.userservice.entity.User;
 import org.aviation.projects.userservice.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
+    static Logger LOG = LoggerFactory.getLogger(CustomUserDetailsService.class);
     private final UserRepository repository;
 
     @Override

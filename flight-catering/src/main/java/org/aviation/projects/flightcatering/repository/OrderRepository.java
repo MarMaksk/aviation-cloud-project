@@ -16,6 +16,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findByIataCode(String iataCode);
 
     Optional<Order> findByIcaoCode(String icaoCode);
+
     @Timed("findOrder")
     Optional<Order> findByProductOrderIdAndDeletedFalse(Integer productOrderId);
 

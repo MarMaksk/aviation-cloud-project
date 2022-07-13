@@ -1,7 +1,7 @@
 package org.aviation.projects.userservice.dto;
 
-import org.aviation.projects.userservice.entity.enums.ERole;
 import lombok.Data;
+import org.aviation.projects.userservice.entity.enums.ERole;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;

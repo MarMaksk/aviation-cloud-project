@@ -1,11 +1,11 @@
 package org.aviation.projects.userservice.security;
 
-import org.aviation.projects.userservice.entity.User;
-import org.aviation.projects.userservice.service.CustomUserDetailsService;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
+import org.aviation.projects.userservice.entity.User;
+import org.aviation.projects.userservice.service.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     CustomUserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = getJWTFromRequest(request);
             if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
@@ -53,6 +53,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getJWTFromRequest(HttpServletRequest request) {
+        LOG.info("getJWTFromRequest");
         String aviaToken = request.getHeader(SecurityConstants.HEADER_STRING);
         if (StringUtils.hasText(aviaToken) && aviaToken.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             return aviaToken.split(" ")[1];

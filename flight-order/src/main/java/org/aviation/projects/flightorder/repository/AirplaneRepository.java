@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface AirplaneRepository extends JpaRepository<Airplane, Long> {
 
     Optional<Airplane> findByIcaoCodeAndDeletedFalse(String icaoCode);
+
     @Timed
     Page<Airplane> findAllByDeletedFalse(Pageable pageable);
 

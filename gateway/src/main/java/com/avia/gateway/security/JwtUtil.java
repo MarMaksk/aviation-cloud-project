@@ -25,7 +25,7 @@ public class JwtUtil {
     private String TOKEN_PREFIX;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
@@ -45,7 +45,7 @@ public class JwtUtil {
         return this.isTokenExpired(token);
     }
 
-    public boolean hasRole(ServerHttpRequest request,String role) {
+    public boolean hasRole(ServerHttpRequest request, String role) {
         String token = getAuthHeader(request);
         Claims claimsFromToken = getAllClaimsFromToken(token);
         if (isInvalid(token))

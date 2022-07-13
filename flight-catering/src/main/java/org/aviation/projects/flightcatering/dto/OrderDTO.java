@@ -1,8 +1,6 @@
 package org.aviation.projects.flightcatering.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -26,13 +24,13 @@ public class OrderDTO {
     Надо доставить за 4 часа до конца
      */
     @ApiModelProperty(value = "Last date", example = "2020-01-01T00:00:00")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastDate;
     /*
     Время когда доставка была осуществлена
      */
     @ApiModelProperty(value = "Delivery time", example = "2020-01-01T00:00:00")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime deliveryTime;
     /*
     Статус доставки

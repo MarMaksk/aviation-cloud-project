@@ -1,14 +1,15 @@
 package org.aviation.projects.flightcatering.service.mapper;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.aviation.projects.commons.service.mapper.EntityToDTOMapper;
 import org.aviation.projects.flightcatering.dto.ProductDTO;
 import org.aviation.projects.flightcatering.dto.TagDTO;
 import org.aviation.projects.flightcatering.entity.Product;
 import org.aviation.projects.flightcatering.entity.Tag;
 import org.aviation.projects.flightcatering.repository.TagRepository;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.aviation.projects.commons.service.mapper.EntityToDTOMapper;
+import org.jfree.util.Log;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class ProductDTOMapper implements EntityToDTOMapper<Product, ProductDTO> 
 
     @Override
     public Product toEntity(ProductDTO dto) {
+        Log.info("toEntity method called in ProductDTOMapper");
         Product entity = mapper.map(dto, Product.class);
         entity.setTags(dto.getTags().stream()
                 .map(tag -> {
@@ -37,6 +39,7 @@ public class ProductDTOMapper implements EntityToDTOMapper<Product, ProductDTO> 
 
     @Override
     public ProductDTO toDTO(Product entity) {
+        Log.info("toDTO method called in ProductDTOMapper");
         ProductDTO dto = mapper.map(entity, ProductDTO.class);
         dto.setTags(entity.getTags().stream()
                 .map(Tag::getName)

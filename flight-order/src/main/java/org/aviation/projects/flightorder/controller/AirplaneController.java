@@ -2,11 +2,13 @@ package org.aviation.projects.flightorder.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.aviation.projects.flightorder.dto.AirplaneDTO;
-import org.aviation.projects.flightorder.service.AirplaneService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.aviation.projects.flightorder.dto.AirplaneDTO;
+import org.aviation.projects.flightorder.service.AirplaneService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +28,8 @@ public class AirplaneController {
 
     AirplaneService airplaneService;
 
+    static Logger LOG = LoggerFactory.getLogger(AirplaneController.class);
+
     @PostMapping
     @ApiOperation(value = "Add new airplane")
     public void create(@RequestBody @Valid AirplaneDTO dto) {
@@ -38,6 +42,7 @@ public class AirplaneController {
                                     @PathVariable Integer page,
                                     @PathVariable String sortBy,
                                     @PathVariable String direction) {
+        LOG.info("Get all airplanes with pagination");
         Pageable request = PageRequest.of(page, order, Sort.by(Sort.Direction.fromString(direction), sortBy));
         return airplaneService.findAll(request);
     }
@@ -45,13 +50,15 @@ public class AirplaneController {
     @GetMapping
     @ApiOperation(value = "Show all no busy airplanes", response = Iterable.class)
     public Set<AirplaneDTO> getAllAirplaneNoBusy() {
+        LOG.info("Get all no busy airplanes");
         return new HashSet<>(airplaneService.findAllNoBusy());
     }
 
-    @GetMapping("/{iataCode}")
+    @GetMapping("/{icaoCode}")
     @ApiOperation(value = "Get current airplane", response = AirplaneDTO.class)
-    public AirplaneDTO getAirplane(@PathVariable String iataCode) throws Exception {
-        return airplaneService.findByCode(iataCode);
+    public AirplaneDTO getAirplane(@PathVariable String icaoCode) throws Exception {
+        LOG.info("Get airplane by icaoCode");
+        return airplaneService.findByCode(icaoCode);
     }
 
 }

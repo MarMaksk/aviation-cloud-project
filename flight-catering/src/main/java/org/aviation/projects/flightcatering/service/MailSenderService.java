@@ -3,6 +3,7 @@ package org.aviation.projects.flightcatering.service;
 import feign.RetryableException;
 import lombok.RequiredArgsConstructor;
 import org.aviation.projects.flightcatering.feign.UserClient;
+import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,9 @@ public class MailSenderService implements ISender {
             List<String> catererEmailsEmails = userClient.getCatererEmailsEmails(token);
             for (String email : catererEmailsEmails) {
                 try {
+                    Log.info("Sending email to " + email);
                     send(email, subject, message);
+                    Log.info("Email sent to " + email);
                 } catch (MailException exception) {
                     LOG.error("Error sending email", exception);
                 }
@@ -47,6 +50,7 @@ public class MailSenderService implements ISender {
 
     @Override
     public void send(String emailTo, String subject, String message) {
+        Log.info("Sending email to " + emailTo);
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
         mailMessage.setTo(emailTo);
@@ -57,6 +61,7 @@ public class MailSenderService implements ISender {
 
     @Override
     public void send(String emailTo, String subject, byte[] data, String name) {
+        Log.info("Sending email to " + emailTo);
         MimeMessage mail = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mail, MimeMessageHelper.MULTIPART_MODE_MIXED,

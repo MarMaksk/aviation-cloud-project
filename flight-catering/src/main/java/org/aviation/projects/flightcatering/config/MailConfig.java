@@ -1,5 +1,6 @@
 package org.aviation.projects.flightcatering.config;
 
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
@@ -34,11 +35,9 @@ public class MailConfig {
         mailSender.setPort(port);
         mailSender.setUsername(username);
         mailSender.setPassword(password);
-
         Properties properties = mailSender.getJavaMailProperties();
-
         properties.setProperty("mail.transport.protocol", protocol);
-
+        Log.info("MailConfig: getMailSender: host: " + host + " port: " + port + " protocol: " + protocol);
         return mailSender;
     }
 }

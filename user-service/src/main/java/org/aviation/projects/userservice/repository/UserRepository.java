@@ -3,12 +3,10 @@ package org.aviation.projects.userservice.repository;
 import org.aviation.projects.userservice.entity.User;
 import org.aviation.projects.userservice.entity.enums.ERole;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

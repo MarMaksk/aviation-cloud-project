@@ -1,16 +1,17 @@
 package org.aviation.projects.flightcatering.service.mapper;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.aviation.projects.commons.entity.enums.DeliveryStatus;
+import org.aviation.projects.commons.service.mapper.EntityToDTOMapper;
 import org.aviation.projects.flightcatering.dto.OrderDTO;
 import org.aviation.projects.flightcatering.dto.ProductDTO;
 import org.aviation.projects.flightcatering.entity.Order;
 import org.aviation.projects.flightcatering.entity.Product;
 import org.aviation.projects.flightcatering.exception.NoSuchProductException;
 import org.aviation.projects.flightcatering.repository.ProductRepository;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.aviation.projects.commons.entity.enums.DeliveryStatus;
-import org.aviation.projects.commons.service.mapper.EntityToDTOMapper;
+import org.jfree.util.Log;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ public class OrderDTOMapper implements EntityToDTOMapper<Order, OrderDTO> {
 
     @Override
     public Order toEntity(OrderDTO dto) {
+        Log.info("toEntity method called in OrderDTOMapper");
         Order map = mapper.map(dto, Order.class);
         Set<Product> products = new HashSet<>();
         Set<Product> deliveredProducts = new HashSet<>();
@@ -59,6 +61,7 @@ public class OrderDTOMapper implements EntityToDTOMapper<Order, OrderDTO> {
 
     @Override
     public OrderDTO toDTO(Order entity) {
+        Log.info("toDTO method called in OrderDTOMapper");
         OrderDTO map = mapper.map(entity, OrderDTO.class);
         List<ProductDTO> productDTOS = productDTOMapper.toDTOs(new ArrayList<>(entity.getProducts()));
         map.setProducts(new HashSet<>(productDTOS));

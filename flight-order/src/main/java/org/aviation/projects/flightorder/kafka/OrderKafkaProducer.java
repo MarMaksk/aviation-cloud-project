@@ -1,6 +1,5 @@
 package org.aviation.projects.flightorder.kafka;
 
-import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.aviation.projects.commons.entity.InfoForOrder;
 import org.slf4j.Logger;

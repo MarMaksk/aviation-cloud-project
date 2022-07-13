@@ -2,15 +2,19 @@ package org.aviation.projects.flightcatering.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.aviation.projects.flightcatering.service.ISender;
-import org.aviation.projects.flightcatering.service.ReportService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.aviation.projects.flightcatering.service.ISender;
+import org.aviation.projects.flightcatering.service.ReportService;
+import org.jfree.util.Log;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/report")
@@ -29,6 +33,7 @@ public class ReportController {
         sendInvoiceToDeliver(productOrderId, reportService.generateDeliverInvoice(productOrderId), email);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=report-order" + productOrderId + ".pdf");
+        Log.info("Generate caterer report for order: " + productOrderId);
         return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(bytes);
     }
 
@@ -38,10 +43,12 @@ public class ReportController {
         byte[] bytes = reportService.generateDeliverInvoice(productOrderId);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=invoice" + productOrderId + ".pdf");
+        Log.info("Generate deliver invoice for order: " + productOrderId);
         return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(bytes);
     }
 
-    private void sendInvoiceToDeliver(Integer productOrderId, byte[] data, String email){
+    private void sendInvoiceToDeliver(Integer productOrderId, byte[] data, String email) {
+        Log.info("Send invoice to deliver for order: " + productOrderId);
         new Thread(() ->
                 senderService.send(email, "Накладная на заявку " + productOrderId, data, "invoice" + productOrderId + ".pdf"))
                 .start();

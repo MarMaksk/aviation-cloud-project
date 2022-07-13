@@ -1,7 +1,7 @@
 package org.aviation.projects.userservice.payload.request;
 
-import org.aviation.projects.userservice.annotation.PasswordMatches;
 import lombok.Data;
+import org.aviation.projects.userservice.annotation.PasswordMatches;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

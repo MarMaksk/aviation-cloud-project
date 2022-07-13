@@ -1,16 +1,15 @@
 package org.aviation.projects.flightorder.entity;
 
-import org.aviation.projects.flightorder.entity.enums.FlightStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.aviation.projects.commons.entity.AbstractEntity;
+import org.aviation.projects.flightorder.entity.enums.FlightStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Random;
 
 @Entity
 @Data

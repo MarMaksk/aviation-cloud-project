@@ -1,10 +1,10 @@
 package org.aviation.projects.userservice.entity;
 
-import org.aviation.projects.userservice.entity.enums.ERole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.aviation.projects.commons.entity.AbstractEntity;
+import org.aviation.projects.userservice.entity.enums.ERole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -56,7 +56,7 @@ public class User extends AbstractEntity implements UserDetails {
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
