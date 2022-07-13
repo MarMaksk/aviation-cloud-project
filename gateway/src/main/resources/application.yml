@@ -10,9 +10,7 @@ spring:
           '[/**]':
             allowedOrigins: "*"
             allowedHeaders: "*"
-            allowedMethods:
-              - GET
-              - POST
+            allowedMethods: "*"
       discovery:
         locator:
           enabled: true
@@ -21,19 +19,19 @@ spring:
         - id: flight-catering
           uri: lb://flight-catering
           predicates:
-            - Path=/avia/catering/**
+            - Path=/flight-catering/**
           filters:
             - StripPrefix=1
         - id: flight-order
           uri: lb://flight-order
           predicates:
-            - Path=/avia/order/**
+            - Path=/flight-order/**
           filters:
-            - StripPrefix=2
+            - StripPrefix=1
         - id: flight-user
           uri: lb://flight-user
           predicates:
-            - Path=/avia/**
+            - Path=/flight-user/**
           filters:
             - StripPrefix=1
 eureka:

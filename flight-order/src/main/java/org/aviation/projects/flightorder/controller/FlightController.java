@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/flight")
-@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Api(value = "Controller for flight order")

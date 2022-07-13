@@ -19,7 +19,6 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/airplane")
-@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Api(value = "Controller for airplanes")

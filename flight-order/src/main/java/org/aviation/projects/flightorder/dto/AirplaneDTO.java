@@ -18,7 +18,7 @@ public class AirplaneDTO {
     @Size(max = 3)
     @EqualsAndHashCode.Exclude
     @ApiModelProperty(value = "Airplane code", example = "M01")
-    private String iataCode;
+    private String icaoCode;
 
     @ApiModelProperty(value = "Airplane capacity", example = "100")
     private int loadCapacity;

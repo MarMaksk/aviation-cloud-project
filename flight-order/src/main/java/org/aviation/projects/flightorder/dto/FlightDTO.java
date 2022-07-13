@@ -1,5 +1,8 @@
 package org.aviation.projects.flightorder.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -29,11 +32,13 @@ public class FlightDTO {
     Время вылета
      */
     @ApiModelProperty(value = "Departure time", example = "2020-01-01T00:00:00")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime departure;
     /*
     Время полёта
      */
     @ApiModelProperty(value = "Flight time", example = "01:00:00")
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime flightTime;
 
     @ApiModelProperty(value = "Flight passengers", example = "100")

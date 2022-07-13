@@ -19,7 +19,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/order")
-@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Api(value = "Controller for catering order")

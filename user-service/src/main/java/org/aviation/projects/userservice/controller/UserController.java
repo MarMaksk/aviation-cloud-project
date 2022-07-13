@@ -19,7 +19,6 @@ import java.security.Principal;
 @RestController
 @RequestMapping("avia/user")
 @RequiredArgsConstructor
-@CrossOrigin
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class UserController {
 

@@ -27,7 +27,6 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Set;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/avia/auth")
 @PreAuthorize("permitAll()")

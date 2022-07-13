@@ -10,7 +10,7 @@ public class AirportDTO {
 
     @Size(max = 4)
     @ApiModelProperty(value = "Airport code", example = "1111")
-    private String icaoCode;
+    private String iataCode;
 
     @ApiModelProperty(value = "Airport country", example = "Russia")
     private String country;
